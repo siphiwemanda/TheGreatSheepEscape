@@ -1,3 +1,9 @@
+import { Sheep } from './Sheep.js'
+import { Background } from './Background.js'
+import { LoadScreen } from './LoadScreen.js'
+import { EndGame } from './EndGame.js'
+import { FenceFactory } from './FenceFactory.js'
+
 export async function Game(canvas, state) {
     const game = Game;
     console.log(canvas)
@@ -44,12 +50,12 @@ async function StartGame(canvas, context) {
     await GameEngine(canvas, context, fences, background, sheep)
 }
 
-function EndGame() {
+function endGame() {
 
 }
 
 
-async function getFences() {
+async function getFences(canvas) {
     let fenceObject;
 
     await fetch("../data/fences.json").then(function (response) {
