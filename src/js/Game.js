@@ -1,6 +1,6 @@
-async function Game(canvas, state) {
-    const game = this;
-
+export async function Game(canvas, state) {
+    const game = Game;
+    console.log(canvas)
 
     game.canvas = canvas;
     game.context = game.canvas.getContext('2d')
@@ -8,7 +8,7 @@ async function Game(canvas, state) {
     game.state = state
 
     if (game.state === 1) {
-        return await LoadGame(state)
+        return await LoadGame(canvas, state)
     }
     if (game.state === 2) {
         await StartGame(canvas, game.context)
@@ -19,7 +19,7 @@ async function Game(canvas, state) {
 
 }
 
-async function LoadGame(state) {
+async function LoadGame(canvas, state) {
     const start = new LoadScreen(canvas)
     console.log(start)
     console.log(state)
@@ -129,3 +129,4 @@ async function GameEngine(canvas, context, fences, background, sheep) {
     })
 
 }
+
