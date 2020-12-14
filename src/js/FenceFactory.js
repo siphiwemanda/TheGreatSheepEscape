@@ -11,7 +11,7 @@ class FenceFactory {
         this.x = x
         this.y = y
         this.img = new Image()
-        this.img.src = null
+        this.img.src = src
         this.img.onload = () => {
             this.context.drawImage(this.img, this.x, this.y)
         }
@@ -21,7 +21,7 @@ class FenceFactory {
         this.x = x
         this.y = y
         this.img = new Image()
-        this.img.src = null
+        this.img.src = src
 
         this.context.drawImage(this.img, this.x, this.y)
     }
