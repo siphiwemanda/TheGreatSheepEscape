@@ -1,28 +1,52 @@
-async function Game(canvas) {
+async function StartGame(canvas, context) {
+    const background = new Background(canvas)
+    const sheep = new Sheep(canvas)
+    const fences = await getFences(canvas)
+    console.log(fences)
+    await GameEngine(canvas, context, fences, background, sheep)
+}
+
+function EndGame() {
+
+}
+
+async function Game(canvas, state) {
     const game = this;
 
 
     game.canvas = canvas;
     game.context = game.canvas.getContext('2d')
 
-    game.state = 1
+    game.state = state
 
     if (game.state === 1) {
-        const start = new LoadScreen(canvas)
-        console.log(start)
-        await start.Draw()
-        await start.Drawblack()
-        await start.Drawwhite()
-        await start.Drawyellow()
-    } else {
-
-        const background = new Background(canvas)
-        const sheep = new Sheep(canvas)
-        const fences = await getFences(canvas)
-        console.log(fences)
-        await GameEngine(canvas, game.context, fences, background, sheep)
+        return await LoadGame(state)
+    }
+    if (game.state === 2) {
+        await StartGame(canvas, game.context)
+    }
+    if (game.state === 3) {
+        EndGame()
     }
 
+}
+
+async function LoadGame(state) {
+    const start = new LoadScreen(canvas)
+    console.log(start)
+    console.log(state)
+    await start.Draw()
+    await start.Drawblack()
+    await start.Drawwhite()
+    await start.Drawyellow()
+    window.addEventListener('click', function (event) {
+        console.log('click')
+        console.log(event)
+        state = 2
+        console.log(state)
+        Game(canvas, state)
+
+    })
 }
 
 
