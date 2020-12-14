@@ -1,0 +1,64 @@
+{
+  "Fences": [
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 100,
+      "y": 200
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 100,
+      "y": 328
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 100,
+      "y": 456
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 100,
+      "y": 584
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 200,
+      "y": 0
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 200,
+      "y": 256
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 200,
+      "y": 512
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 200,
+      "y": 640
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 200,
+      "y": 200
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 600,
+      "y": 200
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 700,
+      "y": 200
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 850,
+      "y": 200
+    }
+  ]
+}

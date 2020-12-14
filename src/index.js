@@ -1,7 +1,9 @@
-function addHeadingToPage() {
-    const heading = document.getElementById('header')
+window.onload = async function (){
 
-    heading.innerHTML = "hello world"
+    const canvas = document.getElementById('sheepEscape')
+
+    // Game object
+    await Game(canvas)
+
 
 }
-addHeadingToPage()
