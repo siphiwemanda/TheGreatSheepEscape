@@ -1,24 +1,30 @@
 async function Game(canvas) {
     const game = this;
 
+
     game.canvas = canvas;
     game.context = game.canvas.getContext('2d')
-    await createBackground(canvas)
 
-    const background = new Background(canvas)
-    const sheep = new Sheep(canvas)
-    const fences = await getFences(canvas)
-    console.log(fences)
-    await GameEngine(canvas, game.context, fences, background, sheep)
+    game.state = 1
+
+    if (game.state === 1) {
+        const start = new LoadScreen(canvas)
+        console.log(start)
+        await start.Draw()
+        await start.Drawblack()
+        await start.Drawwhite()
+        await start.Drawyellow()
+    } else {
+
+        const background = new Background(canvas)
+        const sheep = new Sheep(canvas)
+        const fences = await getFences(canvas)
+        console.log(fences)
+        await GameEngine(canvas, game.context, fences, background, sheep)
+    }
 
 }
 
-async function createBackground(canvas) {
-    const background = new Background(canvas)
-    await background.Draw()
-
-    //console.log(background)
-}
 
 async function getFences() {
     let fenceObject;
@@ -80,21 +86,21 @@ async function GameEngine(canvas, context, fences, background, sheep) {
     window.addEventListener("keydown", function (event) {
         if (event.code === "ArrowUp") {
             console.log(event.code)
-            sheep.y = sheep.y-5
+            sheep.y = sheep.y - 5
         }
         if (event.code === "ArrowDown") {
             console.log(event.code)
-            sheep.y = sheep.y+5
+            sheep.y = sheep.y + 5
 
         }
         if (event.code === "ArrowRight") {
             console.log(event.code)
-            sheep.x = sheep.x +5
+            sheep.x = sheep.x + 5
 
         }
         if (event.code === "ArrowLeft") {
             console.log(event.code)
-            sheep.x = sheep.x -5
+            sheep.x = sheep.x - 5
 
         }
     })
