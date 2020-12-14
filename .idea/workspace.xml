@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c12bc25-ed81-4ccc-bd7f-49bfe676c543" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/js/Background.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Background.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/EndGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/EndGame.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/FenceFactory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/FenceFactory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/LoadScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/LoadScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/Sheep.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Sheep.js" afterDir="false" />
-    </list>
+    <list default="true" id="1c12bc25-ed81-4ccc-bd7f-49bfe676c543" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -149,7 +142,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607940218961</updated>
-      <workItem from="1607940220566" duration="22256000" />
+      <workItem from="1607940220566" duration="22573000" />
     </task>
     <servers />
   </component>
