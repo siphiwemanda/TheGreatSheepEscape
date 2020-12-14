@@ -1,8 +1,13 @@
-const assert = require('assert');
-describe('Array', function() {
-    describe('#indexOf()', function() {
-        it('should return -1 when the value is not present', function() {
-            assert.equal([1, 2, 3].indexOf(4), -1);
-        });
-    });
+const expect = require('chai').expect;
+const request = require('request');
+//require = '../src/js/Game.js'
+
+it('Main page loaded', function (done) {
+    request('http://localhost:3001', function (error, response, body){
+        expect(response.statusCode).to.equal(200);
+        done();
+    })
+
 });
+
+
