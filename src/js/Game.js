@@ -1,15 +1,3 @@
-async function StartGame(canvas, context) {
-    const background = new Background(canvas)
-    const sheep = new Sheep(canvas)
-    const fences = await getFences(canvas)
-    console.log(fences)
-    await GameEngine(canvas, context, fences, background, sheep)
-}
-
-function EndGame() {
-
-}
-
 async function Game(canvas, state) {
     const game = this;
 
@@ -47,6 +35,17 @@ async function LoadGame(state) {
         Game(canvas, state)
 
     })
+}
+async function StartGame(canvas, context) {
+    const background = new Background(canvas)
+    const sheep = new Sheep(canvas)
+    const fences = await getFences(canvas)
+    console.log(fences)
+    await GameEngine(canvas, context, fences, background, sheep)
+}
+
+function EndGame() {
+
 }
 
 
