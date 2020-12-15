@@ -5,8 +5,8 @@ export class GameScore{
 
         this.start = new Date()
         this.score = 0
-        this.x = 0
-        this. y = 0
+        this.x = 1110
+        this. y = 45
 
     }
     Draw(){
