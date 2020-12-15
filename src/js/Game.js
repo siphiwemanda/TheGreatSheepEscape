@@ -135,29 +135,33 @@ async function GameEngine(canvas, context, fences, background, sheep) {
     window.addEventListener("keydown", function (event) {
         if (event.code === "ArrowUp") {
             console.log(event.code)
-            while (CollisionCheck(sheep.x, sheep.y))
-
-            sheep.y = sheep.y - 5
+            let TemporaryY = sheep.y-5
+            if (CollisionCheck(sheep.x, TemporaryY)){
+                sheep.y = sheep.y -5
+            }
         }
         if (event.code === "ArrowDown") {
             console.log(event.code)
-            sheep.y = sheep.y + 5
+
+            let TemporaryY = sheep.y+5
+            if (CollisionCheck(sheep.x, TemporaryY)){
+                sheep.y = sheep.y + 5
+            }
 
         }
         if (event.code === "ArrowRight") {
             console.log(event.code)
-            do{
+            let TemporaryX = sheep.x+5
+            if (CollisionCheck(TemporaryX, sheep.y)){
                 sheep.x = sheep.x + 5
             }
-            while (CollisionCheck(sheep.x, sheep.y))
-
-
-
-
         }
         if (event.code === "ArrowLeft") {
             console.log(event.code)
-            sheep.x = sheep.x - 5
+            let TemporaryX = sheep.x-5
+            if (CollisionCheck(TemporaryX, sheep.y)){
+                sheep.x = sheep.x - 5
+            }
 
         }
     })
@@ -165,24 +169,23 @@ async function GameEngine(canvas, context, fences, background, sheep) {
 }
 
 function CollisionCheck(sheepX, sheepY) {
-    let screenEdge = false
-    let noColision = true
-    const rightEdge = 1200 - 140;
-    const leftEdge = 140;
+    let noCollision = true
+    const rightEdge = 1200 - 45;
+    const leftEdge = 0;
+    const topEdge = 0
+    const bottomEdge = 800 - 45
 
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
-
-        console.log(sheepX)
-        screenEdge = true;
-        console.log(screenEdge)
-        noColision = false
-        return noColision
-
-    } else {
-        screenEdge = false
-        return noColision
+        noCollision = false
+        return noCollision
     }
-
+    if (sheepY <= topEdge || sheepY >= bottomEdge){
+        noCollision = false
+        return noCollision
+    }
+    else {
+        return noCollision
+    }
 
 }
 

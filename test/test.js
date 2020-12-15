@@ -1,3 +1,4 @@
+/*
 
 
 import chai from 'chai';
@@ -23,4 +24,4 @@ describe('#loaddata()', function() {
     })
 
 
-})
+})*/
