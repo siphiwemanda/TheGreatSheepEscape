@@ -66,7 +66,7 @@ async function StartGame(canvas, context) {
     const background = new Background(canvas)
     const sheep = new Sheep(canvas)
     const fences = await getFences(canvas)
-    console.log(fences)
+    //console.log(fences)
     await GameEngine(canvas, context, fences, background, sheep)
 }
 
@@ -136,7 +136,7 @@ async function GameEngine(canvas, context, fences, background, sheep) {
         if (event.code === "ArrowUp") {
             console.log(event.code)
             let TemporaryY = sheep.y-5
-            if (CollisionCheck(sheep.x, TemporaryY)){
+            if (CollisionCheck(sheep.x, TemporaryY, fences)){
                 sheep.y = sheep.y -5
             }
         }
@@ -144,7 +144,7 @@ async function GameEngine(canvas, context, fences, background, sheep) {
             console.log(event.code)
 
             let TemporaryY = sheep.y+5
-            if (CollisionCheck(sheep.x, TemporaryY)){
+            if (CollisionCheck(sheep.x, TemporaryY, fences)){
                 sheep.y = sheep.y + 5
             }
 
@@ -152,14 +152,14 @@ async function GameEngine(canvas, context, fences, background, sheep) {
         if (event.code === "ArrowRight") {
             console.log(event.code)
             let TemporaryX = sheep.x+5
-            if (CollisionCheck(TemporaryX, sheep.y)){
+            if (CollisionCheck(TemporaryX, sheep.y, fences)){
                 sheep.x = sheep.x + 5
             }
         }
         if (event.code === "ArrowLeft") {
             console.log(event.code)
             let TemporaryX = sheep.x-5
-            if (CollisionCheck(TemporaryX, sheep.y)){
+            if (CollisionCheck(TemporaryX, sheep.y, fences)){
                 sheep.x = sheep.x - 5
             }
 
@@ -168,12 +168,20 @@ async function GameEngine(canvas, context, fences, background, sheep) {
 
 }
 
-function CollisionCheck(sheepX, sheepY) {
+function CollisionCheck(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
     const topEdge = 0
     const bottomEdge = 800 - 45
+    //console.log(fences[0].src.includes('Vertical'))
+    fences.forEach(fence =>{
+        if (fence.src.includes('Vertical') && sheepX === fence.x +140 ) {
+            console.log(fence.x, fence.y)
+        }
+       // console.log(fence.src.includes('Vertical'))
+        }
+    )
 
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
         noCollision = false
@@ -186,6 +194,9 @@ function CollisionCheck(sheepX, sheepY) {
     else {
         return noCollision
     }
+
+
+
 
 }
 
