@@ -4,6 +4,7 @@ import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
 import {FenceFactory} from './FenceFactory.js'
 import {HealthScore} from './HealthScore.js'
+import {Treasure} from "./Treasure.js";
 
 export async function Game(canvas, state) {
     const game = Game;
@@ -107,6 +108,20 @@ async function createMaze(canvas, fences) {
     }
 }
 
+export async function addTreasure(canvas) {
+    let randomNumber = Math.floor(Math.random() * 10) + 1
+    let randomX = Math.floor(Math.random() * 100) + 1
+    let randomY  = Math.floor(Math.random() * 100) + 1
+    const treasureArray = []
+    for (let i = 0; i < randomNumber; i++) {
+        let treasure = new Treasure(canvas)
+        await treasure.Draw(randomX, randomY)
+        treasureArray.push(treasure)
+    }
+
+    return treasureArray
+}
+
 async function GameEngine(canvas, context, fences, background, sheep) {
     window.requestAnimationFrame(animationLoop)
 
@@ -124,6 +139,7 @@ async function GameEngine(canvas, context, fences, background, sheep) {
             counter %= 6
 
             background.DrawTile()
+            addTreasure(canvas)
             createMaze(canvas, fences)
             sheep.DrawTile(counter)
         }
@@ -184,7 +200,6 @@ function CollisionCheck(sheepX, sheepY, fences) {
             noCollision = false
             console.log(noCollision)
         }
-       // console.log(fence.src.includes('Vertical'))
         }
     )
     fences.forEach(fence =>{
@@ -193,7 +208,6 @@ function CollisionCheck(sheepX, sheepY, fences) {
                 noCollision = false
                 console.log(noCollision)
             }
-            // console.log(fence.src.includes('Vertical'))
         }
     )
 
