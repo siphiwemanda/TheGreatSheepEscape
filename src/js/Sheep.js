@@ -2,8 +2,8 @@ export class Sheep {
     constructor(canvas) {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
-        this.x = 400;
-        this.y = 400
+        this.x = 10;
+        this.y = 10
         this.cellwidth = 140
         this.cellHeight = 103;
     }

@@ -177,6 +177,8 @@ function CollisionCheck(sheepX, sheepY, fences) {
     //console.log(fences[0].src.includes('Vertical'))
     //vertical fence width  - 32
     //vertical fence height - 128
+    //horizontal fence width - 128
+    //horizontal fence height = 64
     fences.forEach(fence =>{
         if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128 ) ) {
             console.log(fence.x)
@@ -184,6 +186,15 @@ function CollisionCheck(sheepX, sheepY, fences) {
             console.log(noCollision)
         }
        // console.log(fence.src.includes('Vertical'))
+        }
+    )
+    fences.forEach(fence =>{
+            if (fence.src.includes('Horizontal') && (sheepY >= fence.y-64 && sheepY <= fence.y + 64 && sheepX+50 >= fence.x && sheepX+50 <= fence.x + 128 ) ) {
+                console.log(fence.x)
+                noCollision = false
+                console.log(noCollision)
+            }
+            // console.log(fence.src.includes('Vertical'))
         }
     )
 
