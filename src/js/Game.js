@@ -1,8 +1,9 @@
-import { Sheep } from './Sheep.js'
-import { Background } from './Background.js'
-import { LoadScreen } from './LoadScreen.js'
-import { EndGame } from './EndGame.js'
-import { FenceFactory } from './FenceFactory.js'
+import {Sheep} from './Sheep.js'
+import {Background} from './Background.js'
+import {LoadScreen} from './LoadScreen.js'
+import {EndGame} from './EndGame.js'
+import {FenceFactory} from './FenceFactory.js'
+import {GameScore} from './GameScore.js'
 
 export async function Game(canvas, state) {
     const game = Game;
@@ -20,9 +21,25 @@ export async function Game(canvas, state) {
         await StartGame(canvas, game.context)
     }
     if (game.state === 3) {
-        EndGame()
+        //EndGame()
     }
 
+}
+
+// controls the loop the game is currently in
+function GameLoop(CurrentState) {
+    switch (CurrentState) {
+        case 1:
+            //draw opening screen
+            break;
+        case 2:
+            //draw playing screen
+            break;
+        case 3:
+            //draw ending screen]
+            break;
+
+    }
 }
 
 async function LoadGame(canvas, state) {
@@ -33,6 +50,8 @@ async function LoadGame(canvas, state) {
     await start.Drawblack()
     await start.Drawwhite()
     await start.Drawyellow()
+    const score = new GameScore(canvas)
+    score.Draw()
     window.addEventListener('click', function (event) {
         console.log('click')
         console.log(event)
@@ -42,6 +61,7 @@ async function LoadGame(canvas, state) {
 
     })
 }
+
 async function StartGame(canvas, context) {
     const background = new Background(canvas)
     const sheep = new Sheep(canvas)
@@ -115,6 +135,8 @@ async function GameEngine(canvas, context, fences, background, sheep) {
     window.addEventListener("keydown", function (event) {
         if (event.code === "ArrowUp") {
             console.log(event.code)
+            while (CollisionCheck(sheep.x, sheep.y))
+
             sheep.y = sheep.y - 5
         }
         if (event.code === "ArrowDown") {
@@ -124,7 +146,13 @@ async function GameEngine(canvas, context, fences, background, sheep) {
         }
         if (event.code === "ArrowRight") {
             console.log(event.code)
-            sheep.x = sheep.x + 5
+            do{
+                sheep.x = sheep.x + 5
+            }
+            while (CollisionCheck(sheep.x, sheep.y))
+
+
+
 
         }
         if (event.code === "ArrowLeft") {
@@ -133,6 +161,28 @@ async function GameEngine(canvas, context, fences, background, sheep) {
 
         }
     })
+
+}
+
+function CollisionCheck(sheepX, sheepY) {
+    let screenEdge = false
+    let noColision = true
+    const rightEdge = 1200 - 140;
+    const leftEdge = 140;
+
+    if (sheepX <= leftEdge || sheepX >= rightEdge) {
+
+        console.log(sheepX)
+        screenEdge = true;
+        console.log(screenEdge)
+        noColision = false
+        return noColision
+
+    } else {
+        screenEdge = false
+        return noColision
+    }
+
 
 }
 
