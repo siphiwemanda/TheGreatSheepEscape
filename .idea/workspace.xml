@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c12bc25-ed81-4ccc-bd7f-49bfe676c543" name="Default Changelist" comment="" />
+    <list default="true" id="1c12bc25-ed81-4ccc-bd7f-49bfe676c543" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/Sheep.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/Sheep.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sum.js" beforeDir="false" afterPath="$PROJECT_DIR$/sum.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/sum.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/sum.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +61,7 @@
       <recent name="C:\Users\SiphiweManda\WebstormProjects\gretescape\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.Main page loaded">
+  <component name="RunManager" selected="Mocha.should return an array of fences">
     <configuration name="Main page loaded" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -64,6 +74,36 @@
       <test-file>$PROJECT_DIR$/test/test.js</test-file>
       <test-names>
         <name value="Main page loaded" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="#index()" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/test.js</test-file>
+      <test-names>
+        <name value="#index()" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="#loaddata()" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/test.js</test-file>
+      <test-names>
+        <name value="#loaddata()" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -82,7 +122,7 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="should  fetch the json data and return an array" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+    <configuration name="should return an array of fences" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
@@ -93,44 +133,17 @@
       <test-kind>TEST</test-kind>
       <test-file>$PROJECT_DIR$/test/test.js</test-file>
       <test-names>
-        <name value="should  fetch the json data and return an array" />
+        <name value="should return an array of fences" />
       </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="should  return an array of fences" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
-      <working-directory>$PROJECT_DIR$</working-directory>
-      <pass-parent-env>true</pass-parent-env>
-      <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>TEST</test-kind>
-      <test-file>$PROJECT_DIR$/test/test.js</test-file>
-      <test-names>
-        <name value="should  return an array of fences" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="test\test.js" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
-      <working-directory>$PROJECT_DIR$</working-directory>
-      <pass-parent-env>true</pass-parent-env>
-      <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>TEST_FILE</test-kind>
-      <test-file>$PROJECT_DIR$/test/test.js</test-file>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Mocha.Main page loaded" />
+        <item itemvalue="Mocha.should return an array of fences" />
+        <item itemvalue="Mocha.#loaddata()" />
         <item itemvalue="Mocha.#sum()" />
-        <item itemvalue="Mocha.test\test.js" />
-        <item itemvalue="Mocha.should  fetch the json data and return an array" />
-        <item itemvalue="Mocha.should  return an array of fences" />
+        <item itemvalue="Mocha.#index()" />
+        <item itemvalue="Mocha.Main page loaded" />
       </list>
     </recent_temporary>
   </component>
@@ -142,7 +155,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607940218961</updated>
-      <workItem from="1607940220566" duration="22573000" />
+      <workItem from="1607940220566" duration="28612000" />
+      <workItem from="1607977395233" duration="1813000" />
     </task>
     <servers />
   </component>

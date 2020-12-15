@@ -1,13 +1,26 @@
-const expect = require('chai').expect;
-const request = require('request');
-//require = '../src/js/Game.js'
 
-it('Main page loaded', function (done) {
-    request('http://localhost:3001', function (error, response, body){
-        expect(response.statusCode).to.equal(200);
-        done();
-    })
+
+import chai from 'chai';
+const expect = chai.expect;
+const assert = chai.assert;
+
+
+
+import {getFences} from '../src/js/Game.js'
+
+it('should return an array of fences', async function () {
+    let result = await getFences()
+    console.log(result)
+    assert.isArray(result)
 
 });
 
+describe('#loaddata()', function() {
+    context('without arguments', function() {
+        it('should return 0', function() {
+            expect(getFences()).to.contain(0)
+        })
+    })
 
+
+})

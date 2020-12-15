@@ -1,4 +1,4 @@
-module.exports = function() {
+export default function () {
 
     // Convert arguments object to an array
     const args = Array.prototype.slice.call(arguments);

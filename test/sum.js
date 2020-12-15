@@ -1,7 +1,10 @@
 /* test/sum.js */
-
-const sum = require('../sum.js');
-const expect = require('chai').expect;
+import sum from '../sum.js'
+//const sum = require('../sum.js');
+//const expect = require(['chai']).expect;
+import chai from 'chai';
+const expect = chai.expect;
+const assert = chai.assert;
 
 describe('#sum()', function() {
 

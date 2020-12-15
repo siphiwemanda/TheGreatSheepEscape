@@ -55,7 +55,7 @@ function endGame() {
 }
 
 
-async function getFences(canvas) {
+export async function getFences(canvas) {
     let fenceObject;
 
     await fetch("../data/fences.json").then(function (response) {
