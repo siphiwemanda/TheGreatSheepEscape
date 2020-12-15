@@ -3,7 +3,7 @@ import {Background} from './Background.js'
 import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
 import {FenceFactory} from './FenceFactory.js'
-import {GameScore} from './GameScore.js'
+import {HealthScore} from './HealthScore.js'
 
 export async function Game(canvas, state) {
     const game = Game;
@@ -27,13 +27,15 @@ export async function Game(canvas, state) {
 }
 
 // controls the loop the game is currently in
-function GameLoop(CurrentState) {
+async function GameLoop(CurrentState) {
     switch (CurrentState) {
         case 1:
             //draw opening screen
+            return await LoadGame(canvas, state)
             break;
         case 2:
             //draw playing screen
+            await StartGame(canvas, game.context)
             break;
         case 3:
             //draw ending screen]
@@ -47,10 +49,7 @@ async function LoadGame(canvas, state) {
     console.log(start)
     console.log(state)
     await start.Draw()
-    await start.Drawblack()
-    await start.Drawwhite()
-    await start.Drawyellow()
-    const score = new GameScore(canvas)
+    const score = new HealthScore(canvas)
     score.Draw()
     window.addEventListener('click', function (event) {
         console.log('click')

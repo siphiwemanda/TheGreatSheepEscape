@@ -1,10 +1,10 @@
-export class GameScore{
+export class HealthScore {
     constructor(canvas) {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
 
         this.start = new Date()
-        this.score = 0
+        this.score = 20
         this.x = 1110
         this. y = 45
 
