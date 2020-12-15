@@ -3,7 +3,7 @@ import {Background} from './Background.js'
 import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
 import {FenceFactory} from './FenceFactory.js'
-import {GameScore} from './GameScore.js'
+import {HealthScore} from './HealthScore.js'
 
 export async function Game(canvas, state) {
     const game = Game;
@@ -27,13 +27,15 @@ export async function Game(canvas, state) {
 }
 
 // controls the loop the game is currently in
-function GameLoop(CurrentState) {
+async function GameLoop(CurrentState) {
     switch (CurrentState) {
         case 1:
             //draw opening screen
+            return await LoadGame(canvas, state)
             break;
         case 2:
             //draw playing screen
+            await StartGame(canvas, game.context)
             break;
         case 3:
             //draw ending screen]
@@ -47,10 +49,7 @@ async function LoadGame(canvas, state) {
     console.log(start)
     console.log(state)
     await start.Draw()
-    await start.Drawblack()
-    await start.Drawwhite()
-    await start.Drawyellow()
-    const score = new GameScore(canvas)
+    const score = new HealthScore(canvas)
     score.Draw()
     window.addEventListener('click', function (event) {
         console.log('click')
@@ -66,7 +65,7 @@ async function StartGame(canvas, context) {
     const background = new Background(canvas)
     const sheep = new Sheep(canvas)
     const fences = await getFences(canvas)
-    console.log(fences)
+    //console.log(fences)
     await GameEngine(canvas, context, fences, background, sheep)
 }
 
@@ -136,7 +135,7 @@ async function GameEngine(canvas, context, fences, background, sheep) {
         if (event.code === "ArrowUp") {
             console.log(event.code)
             let TemporaryY = sheep.y-5
-            if (CollisionCheck(sheep.x, TemporaryY)){
+            if (CollisionCheck(sheep.x, TemporaryY, fences)){
                 sheep.y = sheep.y -5
             }
         }
@@ -144,7 +143,7 @@ async function GameEngine(canvas, context, fences, background, sheep) {
             console.log(event.code)
 
             let TemporaryY = sheep.y+5
-            if (CollisionCheck(sheep.x, TemporaryY)){
+            if (CollisionCheck(sheep.x, TemporaryY, fences)){
                 sheep.y = sheep.y + 5
             }
 
@@ -152,14 +151,14 @@ async function GameEngine(canvas, context, fences, background, sheep) {
         if (event.code === "ArrowRight") {
             console.log(event.code)
             let TemporaryX = sheep.x+5
-            if (CollisionCheck(TemporaryX, sheep.y)){
+            if (CollisionCheck(TemporaryX, sheep.y, fences)){
                 sheep.x = sheep.x + 5
             }
         }
         if (event.code === "ArrowLeft") {
             console.log(event.code)
             let TemporaryX = sheep.x-5
-            if (CollisionCheck(TemporaryX, sheep.y)){
+            if (CollisionCheck(TemporaryX, sheep.y, fences)){
                 sheep.x = sheep.x - 5
             }
 
@@ -168,12 +167,36 @@ async function GameEngine(canvas, context, fences, background, sheep) {
 
 }
 
-function CollisionCheck(sheepX, sheepY) {
+function CollisionCheck(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
     const topEdge = 0
     const bottomEdge = 800 - 45
+    //console.log(fences[0].src.includes('Vertical'))
+    //vertical fence width  - 32
+    //vertical fence height - 128
+    //horizontal fence width - 128
+    //horizontal fence height = 64
+    fences.forEach(fence =>{
+        if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128 ) ) {
+            console.log(fence.x)
+            noCollision = false
+            console.log(noCollision)
+        }
+       // console.log(fence.src.includes('Vertical'))
+        }
+    )
+    fences.forEach(fence =>{
+            if (fence.src.includes('Horizontal') && (sheepY >= fence.y-64 && sheepY <= fence.y + 64 && sheepX+50 >= fence.x && sheepX+50 <= fence.x + 128 ) ) {
+                console.log(fence.x)
+                noCollision = false
+                console.log(noCollision)
+            }
+            // console.log(fence.src.includes('Vertical'))
+        }
+    )
+
 
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
         noCollision = false
@@ -186,6 +209,9 @@ function CollisionCheck(sheepX, sheepY) {
     else {
         return noCollision
     }
+
+
+
 
 }
 
