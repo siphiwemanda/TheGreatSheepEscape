@@ -1,4 +1,4 @@
-class LoadScreen {
+export class LoadScreen {
     constructor(canvas) {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
@@ -15,6 +15,7 @@ class LoadScreen {
         this.context.font ='48px serif'
         this.context.fillStyle = 'black'
         this.context.fillText('Escape Olde Worlde Farm', 350, 200)
+        this.context.fillText('click to start', 350, 250)
     }
     Draw() {
         return new Promise(resolve => {

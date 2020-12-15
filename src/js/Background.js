@@ -1,4 +1,4 @@
-class Background {
+export class Background {
     constructor(canvas) {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
