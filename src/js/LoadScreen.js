@@ -23,7 +23,7 @@ export class LoadScreen {
         this.context.fillText('Escape Olde Worlde Farm', 350, 200)
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
-        this.context.fillText('click to start', 510, 250)
+        this.context.fillText('press splace to start', 510, 250)
 
         return new Promise(resolve => {
             this.Pink = new Image()

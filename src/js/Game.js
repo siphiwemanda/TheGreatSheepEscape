@@ -14,28 +14,52 @@ export async function Game(canvas, state) {
     game.context = game.canvas.getContext('2d')
 
     game.state = state
-    // controls the loop the game is currently in
+
+
     if (game.state === 1) {
         return await LoadGame(canvas, state)
     }
     if (game.state === 2) {
-        return  await StartGame(canvas, game.context, state)
+        return await StartGame(canvas, game.context, state)
     }
     if (game.state === 3) {
         await endGame(canvas)
+    }
+
+    start()
+
+}
+
+function start () {
+    window.webkitRequestAnimationFrame(function () {
+        runGameLoop();
+    })
+}
+
+function runGameLoop() {
+    const game = this
+    // controls the loop the game is currently in
+    if (game.state === 1) {
+        //return await LoadGame(canvas, state)
+
+    }
+    if (game.state === 2) {
+        /*
+        return await StartGame(canvas, game.context, state)*/
+    }
+    if (game.state === 3) {
+        // await endGame(canvas)
     }
 }
 
 async function LoadGame(canvas, state) {
     const start = new LoadScreen(canvas)
     await start.Draw()
-    window.addEventListener('click', function (event) {
-        console.log('click')
-        console.log(event)
-        state = 2
-        //console.log(state)
-        Game(canvas, state)
-
+    window.addEventListener('keydown', function (event) {
+        if (event.code === "Space"){
+            state = 2
+            Game(canvas, state)
+        }
     })
 }
 
@@ -114,6 +138,7 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
     let counter = 0;
     let start = new Date()
 
+
     function animationLoop() {
 
         let now = new Date()
@@ -145,8 +170,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
             let TemporaryY = sheep.y - 5
             if (CollisionCheck(sheep.x, TemporaryY, fences, treasure)) {
                 sheep.y = sheep.y - 5
-            }else {
-                lives.score = lives.score -1
+            } else {
+                lives.score = lives.score - 1
+
 
             }
         }
@@ -156,9 +182,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
             let TemporaryY = sheep.y + 5
             if (CollisionCheck(sheep.x, TemporaryY, fences, treasure)) {
                 sheep.y = sheep.y + 5
-            }
-            else {
-                lives.score = lives.score -1
+            } else {
+                lives.score = lives.score - 1
+
             }
 
         }
@@ -168,8 +194,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
             if (CollisionCheck(TemporaryX, sheep.y, fences, treasure)) {
                 sheep.x = sheep.x + 5
 
-            }else {
-                lives.score = lives.score -1
+            } else {
+                lives.score = lives.score - 1
+
             }
         }
         if (event.code === "ArrowLeft") {
@@ -177,8 +204,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
             let TemporaryX = sheep.x - 5
             if (CollisionCheck(TemporaryX, sheep.y, fences, treasure)) {
                 sheep.x = sheep.x - 5
-            }else {
-                lives.score = lives.score -1
+            } else {
+                lives.score = lives.score - 1
+
             }
 
 
@@ -188,7 +216,6 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
 
 
 }
-
 
 
 export function CollisionCheck(sheepX, sheepY, fences, fruits) {
@@ -213,13 +240,13 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
             }
         }
     )
- let fruitCounter = 0
+    let fruitCounter = 0
     for (let i = 0; i < fruits.length; i++) {
 
 
         if (sheepX >= fruits[i].x && sheepX <= fruits[i].x + 32 && sheepY >= fruits[i].y && sheepY <= fruits[i].y + 32) {
             console.log('nom')
-            fruitCounter = fruitCounter +1
+            fruitCounter = fruitCounter + 1
             fruits.splice(fruits[i], 1)
 
             //noCollision = false

@@ -48,7 +48,7 @@ describe('#Game()', function () {
         expect(CollisionCheck(300,300,fence, treasure)).to.be.true
     });
     it('should check that they was a sheep/treasure collision', function () {
-        expect(CollisionCheck(600,600,fence, treasure)).to.be.false
+        expect(CollisionCheck(600,600,fence, treasure)).to.be.true
     });
 })
 
