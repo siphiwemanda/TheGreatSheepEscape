@@ -15,7 +15,7 @@ export async function Game(canvas, state) {
     game.context = game.canvas.getContext('2d')
 
     game.state = state
-
+    // controls the loop the game is currently in
     if (game.state === 1) {
         return await LoadGame(canvas, state)
     }
@@ -24,25 +24,6 @@ export async function Game(canvas, state) {
     }
     if (game.state === 3) {
         //EndGame()
-    }
-
-}
-
-// controls the loop the game is currently in
-async function GameLoop(CurrentState) {
-    switch (CurrentState) {
-        case 1:
-            //draw opening screen
-            return await LoadGame(canvas, state)
-            break;
-        case 2:
-            //draw playing screen
-            await StartGame(canvas, game.context)
-            break;
-        case 3:
-            //draw ending screen]
-            break;
-
     }
 }
 
@@ -201,6 +182,9 @@ export function CollisionCheck(sheepX, sheepY, fences, treasure) {
     //vertical fence height - 128
     //horizontal fence width - 128
     //horizontal fence height = 64
+
+    console.log(fences)
+    console.log(treasure)
     fences.forEach(fence => {
             if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128)) {
                 //console.log(fence.x)
@@ -221,9 +205,12 @@ export function CollisionCheck(sheepX, sheepY, fences, treasure) {
     treasure.forEach(fruit => {
         console.log(fruit.x, fruit.y, fruit.xx, fruit.yy, fruit.xxx, fruit.yyy)
         console.log(sheepY, sheepX)
-        if ((fruit.x && fruit.y) || ( fruit.xx && fruit.yy) || (fruit.xxx && fruit.yyy) === sheepX || sheepY){
+        if ((fruit.x >= sheepX && sheepX <= fruit.x  && sheepY >= fruit.y && sheepY <= fruit.y) ||
+            (fruit.xx >= sheepX && sheepX <= fruit.xx  && sheepY >= fruit.yy && sheepY <= fruit.yy) ||
+            (fruit.xxx >= sheepX && sheepX <= fruit.xxx  && sheepY >= fruit.yyy && sheepY <= fruit.yyy)){
 
             console.log("nom nom nom")
+            //(fruit.x >= sheepX && sheepX <= fruit.x  && sheepY >= fruit.y && sheepY <= fruit.y)
         }
     })
 
