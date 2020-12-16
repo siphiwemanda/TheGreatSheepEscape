@@ -5,6 +5,7 @@ import {EndGame} from './EndGame.js'
 import {FenceFactory} from './FenceFactory.js'
 import {HealthScore} from './HealthScore.js'
 import {Treasure} from "./Treasure.js";
+import {generateRandomNumber} from "./utils.js";
 
 export async function Game(canvas, state) {
     const game = Game;
@@ -66,8 +67,10 @@ async function StartGame(canvas, context) {
     const background = new Background(canvas)
     const sheep = new Sheep(canvas)
     const fences = await getFences(canvas)
+    const treasure = await addTreasure(canvas)
     //console.log(fences)
-    await GameEngine(canvas, context, fences, background, sheep)
+    console.log(treasure)
+    await GameEngine(canvas, context, fences, background, sheep, treasure)
 }
 
 function endGame() {
@@ -109,20 +112,26 @@ async function createMaze(canvas, fences) {
 }
 
 export async function addTreasure(canvas) {
-    let randomNumber = Math.floor(Math.random() * 10) + 1
-    let randomX = Math.floor(Math.random() * 100) + 1
-    let randomY  = Math.floor(Math.random() * 100) + 1
+    let randomNumber = Math.floor(Math.random() * 3) + 1
+
     const treasureArray = []
     for (let i = 0; i < randomNumber; i++) {
-        let treasure = new Treasure(canvas)
-        await treasure.Draw(randomX, randomY)
+        let treasure = new Treasure(canvas, generateRandomNumber(), generateRandomNumber(), generateRandomNumber(),generateRandomNumber(),generateRandomNumber(),generateRandomNumber())
+
         treasureArray.push(treasure)
     }
-
+    console.log(treasureArray)
     return treasureArray
 }
 
-async function GameEngine(canvas, context, fences, background, sheep) {
+function createTreasure(canvas, treasure) {
+    for (let i = 0; i < treasure.length; i++) {
+
+        treasure[i].Draw(treasure[i].x, treasure[i].xx, treasure[i].xxx,treasure[i].y,treasure[i].yy,treasure[i].yyy)
+    }
+}
+
+async function GameEngine(canvas, context, fences, background, sheep, treasure) {
     window.requestAnimationFrame(animationLoop)
 
     let counter = 0;
@@ -139,8 +148,9 @@ async function GameEngine(canvas, context, fences, background, sheep) {
             counter %= 6
 
             background.DrawTile()
-            addTreasure(canvas)
+
             createMaze(canvas, fences)
+            createTreasure(canvas, treasure)
             sheep.DrawTile(counter)
         }
         window.requestAnimationFrame(animationLoop)
