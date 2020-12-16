@@ -10,8 +10,6 @@ import {Pepper} from "./Pepper.js";
 
 export async function Game(canvas, state) {
     const game = Game;
-    console.log(canvas)
-
     game.canvas = canvas;
     game.context = game.canvas.getContext('2d')
 
@@ -21,37 +19,39 @@ export async function Game(canvas, state) {
         return await LoadGame(canvas, state)
     }
     if (game.state === 2) {
-        await StartGame(canvas, game.context)
+        return  await StartGame(canvas, game.context, state)
     }
     if (game.state === 3) {
-        //EndGame()
+        await endGame(canvas)
     }
 }
 
 async function LoadGame(canvas, state) {
     const start = new LoadScreen(canvas)
-    console.log(start)
-    console.log(state)
     await start.Draw()
     window.addEventListener('click', function (event) {
         console.log('click')
         console.log(event)
         state = 2
-        console.log(state)
+        //console.log(state)
         Game(canvas, state)
 
     })
 }
 
-async function StartGame(canvas, context) {
+async function StartGame(canvas, context, state) {
     const background = new Background(canvas)
     const sheep = new Sheep(canvas)
     const fences = await getFences(canvas)
     const treasure = await addTreasure(canvas)
-    await GameEngine(canvas, context, fences, background, sheep, treasure)
+    const lives = new HealthScore(canvas)
+    await GameEngine(canvas, context, fences, background, sheep, treasure, lives, state)
 }
 
-function endGame() {
+async function endGame(canvas) {
+
+    const end = new EndGame(canvas)
+    await end.Draw()
 
 }
 
@@ -95,9 +95,9 @@ export async function addTreasure(canvas) {
     for (let i = 0; i < generateRandomNumberMaxThree(); i++) {
         let carrot = new Carrot(canvas, generateRandomNumber(), generateRandomNumber())
         let pepper = new Pepper(canvas, generateRandomNumber(), generateRandomNumber())
-        treasureArray.push(carrot,pepper)
+        treasureArray.push(carrot, pepper)
     }
-    console.log(treasureArray)
+    //console.log(treasureArray)
     return treasureArray
 }
 
@@ -108,9 +108,9 @@ function createTreasure(canvas, treasure) {
     }
 }
 
-async function GameEngine(canvas, context, fences, background, sheep, treasure) {
+async function GameEngine(canvas, context, fences, background, sheep, treasure, lives, state) {
     window.requestAnimationFrame(animationLoop)
-
+    console.log(state)
     let counter = 0;
     let start = new Date()
 
@@ -127,14 +127,17 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
             background.DrawTile()
 
             createMaze(canvas, fences)
+
             createTreasure(canvas, treasure)
-            const score = new HealthScore(canvas)
-            score.Draw()
+
+            lives.Draw()
             sheep.DrawTile(counter)
+
         }
         window.requestAnimationFrame(animationLoop)
 
     }
+
 
     window.addEventListener("keydown", function (event) {
         if (event.code === "ArrowUp") {
@@ -142,6 +145,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
             let TemporaryY = sheep.y - 5
             if (CollisionCheck(sheep.x, TemporaryY, fences, treasure)) {
                 sheep.y = sheep.y - 5
+            }else {
+                lives.score = lives.score -1
+
             }
         }
         if (event.code === "ArrowDown") {
@@ -151,6 +157,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
             if (CollisionCheck(sheep.x, TemporaryY, fences, treasure)) {
                 sheep.y = sheep.y + 5
             }
+            else {
+                lives.score = lives.score -1
+            }
 
         }
         if (event.code === "ArrowRight") {
@@ -158,6 +167,9 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
             let TemporaryX = sheep.x + 5
             if (CollisionCheck(TemporaryX, sheep.y, fences, treasure)) {
                 sheep.x = sheep.x + 5
+
+            }else {
+                lives.score = lives.score -1
             }
         }
         if (event.code === "ArrowLeft") {
@@ -165,13 +177,19 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
             let TemporaryX = sheep.x - 5
             if (CollisionCheck(TemporaryX, sheep.y, fences, treasure)) {
                 sheep.x = sheep.x - 5
+            }else {
+                lives.score = lives.score -1
             }
+
 
         }
 
     })
 
+
 }
+
+
 
 export function CollisionCheck(sheepX, sheepY, fences, fruits) {
     let noCollision = true
@@ -179,11 +197,6 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
     const leftEdge = 0;
     const topEdge = 0
     const bottomEdge = 800 - 45
-    //console.log(fences[0].src.includes('Vertical'))
-    //vertical fence width  - 32
-    //vertical fence height - 128
-    //horizontal fence width - 128
-    //horizontal fence height = 64
     fences.forEach(fence => {
             if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128)) {
                 //console.log(fence.x)
@@ -200,23 +213,18 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
             }
         }
     )
-
-/*    fruits.forEach(fruit => {
-        if (fruit.x >= sheepX && sheepX <= fruit.x+32  && sheepY >= fruit.y && sheepY <= fruit.y+32){
-            fruits.splice(fruit)
-            //noCollision = false
-        }
-    })*/
-
+ let fruitCounter = 0
     for (let i = 0; i < fruits.length; i++) {
-        if ((fruits[i].x >= sheepX && sheepX <= fruits[i].x+32)  && (fruits[i].y >= sheepY && sheepY <= fruits[i].y+32)){
+
+
+        if (sheepX >= fruits[i].x && sheepX <= fruits[i].x + 32 && sheepY >= fruits[i].y && sheepY <= fruits[i].y + 32) {
+            console.log('nom')
+            fruitCounter = fruitCounter +1
             fruits.splice(fruits[i], 1)
+
             //noCollision = false
         }
     }
-
-    console.log(fruits)
-
 
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
         noCollision = false
@@ -228,7 +236,6 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
     } else {
         return noCollision
     }
-
 
 
 }

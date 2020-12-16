@@ -8,10 +8,6 @@ export class LoadScreen {
 
         this.cellHeight = 96;
 
-
-        /*      this.context.fillStyle = '#DAF7A6'
-              this.context.fillRect(0,0,this.width,this.height)*/
-
         const gradient = this.context.createLinearGradient(0, 0, 200, 0)
         gradient.addColorStop(0, "#e7e7e7")
         gradient.addColorStop(1, "#b0d6ca")
@@ -19,15 +15,18 @@ export class LoadScreen {
         this.context.fillStyle = gradient
         this.context.fillRect(0, 0, 1200, 800)
 
+    }
+
+    Draw() {
+
+
         this.context.font = '48px serif'
         this.context.fillStyle = 'black'
         this.context.fillText('Escape Olde Worlde Farm', 350, 200)
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
         this.context.fillText('click to start', 510, 250)
-    }
 
-    Draw() {
         return new Promise(resolve => {
             this.Pink = new Image()
             this.Pink.src = "../img/sheep/PinkSheepIdle.png"
