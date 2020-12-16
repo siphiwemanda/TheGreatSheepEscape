@@ -18,8 +18,6 @@ export class LoadScreen {
     }
 
     Draw() {
-
-
         this.context.font = '48px serif'
         this.context.fillStyle = 'black'
         this.context.fillText('Escape Olde Worlde Farm', 350, 200)
