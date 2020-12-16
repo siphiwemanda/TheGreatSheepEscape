@@ -7,6 +7,7 @@ import {Game, addTreasure, CollisionCheck} from '../src/js/Game.js'
 import {generateRandomNumber, generateRandomNumberMaxThree} from "../src/js/utils.js";
 
 let fence =[]
+let treasure = []
 
 
 describe('#Game()', function () {
@@ -31,7 +32,7 @@ describe('#Game()', function () {
         expect(generateRandomNumberMaxThree()).to.be.a('number')
     });
     it('should check that they where no sheep/fence collision', function () {
-        expect(CollisionCheck(100,200,fence)).to.be.true
+        expect(CollisionCheck(100,200,fence, treasure)).to.be.true
     });
 })
 
