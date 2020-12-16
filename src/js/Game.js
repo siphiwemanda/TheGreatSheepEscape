@@ -72,19 +72,6 @@ export class Game {
     }
 
 
-    /*
-        if (game.state === 1) {
-            return await LoadGame(canvas, state)
-        }
-        if (game.state === 2) {
-            return await StartGame(canvas, game.context, state)
-        }
-        if (game.state === 3) {
-            await endGame(canvas)
-        }
-
-    */
-
 
     static async runGameLoop() {
         const game = Game;
@@ -130,7 +117,7 @@ export class Game {
         const treasure = await addTreasure(game.canvas)
         await createMaze(game.canvas, game.fences)
 
-        //createTreasure(game.canvas, treasure)
+
 
 
         this.context.font = '15px serif'
@@ -264,83 +251,7 @@ export class Game {
     }
 }
 
-/*function start () {
-    window.webkitRequestAnimationFrame(function () {
-        runGameLoop();
-    })
-}*/
 
-/*function runGameLoop() {
-    const game = this
-    // controls the loop the game is currently in
-    if (game.state === 1) {
-        //return await LoadGame(canvas, state)
-
-    }
-    if (game.state === 2) {
-        /!*
-        return await StartGame(canvas, game.context, state)*!/
-    }
-    if (game.state === 3) {
-        // await endGame(canvas)
-    }
-}*/
-
-/*async function LoadGame(canvas, state) {
-    const start = new LoadScreen(canvas)
-    await start.Draw()
-    window.addEventListener('keydown', function (event) {
-        if (event.code === "Space") {
-            state = 2
-            Game(canvas, state)
-        }
-    })
-}
-
-async function StartGame(canvas, context, state) {
-    const background = new Background(canvas)
-
-    const sheep = new Sheep(canvas)
-    const fences = await getFences(canvas)
-    const treasure = await addTreasure(canvas)
-    const lives = new Lives(canvas)
-    await GameEngine(canvas, context, fences, background, sheep, treasure, lives, state)
-}
-
-/!*async function endGame(canvas) {
-
-    const end = new EndGame(canvas)
-    await end.Draw()
-
-}*!/*/
-
-
-/*export async function getFences(canvas) {
-    let fenceObject;
-
-    await fetch("../data/fences.json").then(function (response) {
-        return response.json()
-    }).then(function (JSONObject) {
-        //console.log(JSONObject)
-        fenceObject = JSONObject
-    }).catch(function (error) {
-        console.log('Data failed to load')
-        console.log(error)
-    })
-
-    const Fences = []
-    for (let i = 0; i < fenceObject.Fences.length; i++) {
-        let fence = new FenceFactory(canvas)
-        fence.x = fenceObject.Fences[i].x
-        fence.y = fenceObject.Fences[i].y
-        fence.src = fenceObject.Fences[i].src
-        Fences.push(fence)
-    }
-    //console.log(Fences)
-    return Fences
-
-
-}*/
 
 async function createMaze(canvas, fences) {
     for (let i = 0; i < fences.length; i++) {
