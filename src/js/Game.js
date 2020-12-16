@@ -146,15 +146,7 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
             createMaze(canvas, fences)
             createTreasure(canvas, treasure)
             const score = new HealthScore(canvas)
-/*            if (!CollisionCheck(sheep.x,sheep.y,fences)){
-                console.log("sheep hit fence")
-                score.score = score.score - 1
-                score.Draw()
-            }else {
-
-                score.Draw()
-            }*/
-
+            score.Draw()
             sheep.DrawTile(counter)
         }
         window.requestAnimationFrame(animationLoop)
