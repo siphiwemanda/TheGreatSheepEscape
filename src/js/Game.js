@@ -20,7 +20,7 @@ export class Game {
         game.context = game.canvas.getContext('2d')
         game.currentState = INITIAL
         game.addEventListener()
-        game.fences = getFences(game.canvas)
+        game.fences = this.fenceArray()
         game.startTime = new Date()
         game.sheepCounter = 0
         game.sheep = new Sheep(game.canvas)
@@ -29,6 +29,40 @@ export class Game {
         console.log(game.sheep)
         console.log(game.lives)
     }
+    async getFences() {
+        const game = this;
+        let fenceObject;
+        console.log(game.canvas)
+        await fetch("../data/fences.json").then(function (response) {
+            return response.json()
+        }).then(function (JSONObject) {
+            //console.log(JSONObject)
+            fenceObject = JSONObject
+        }).catch(function (error) {
+            console.log('Data failed to load')
+            console.log(error)
+        })
+
+        const Fences = []
+        for (let i = 0; i < fenceObject.Fences.length; i++) {
+
+            let fence = new FenceFactory(game.canvas)
+            fence.x = fenceObject.Fences[i].x
+            fence.y = fenceObject.Fences[i].y
+            fence.src = fenceObject.Fences[i].src
+            Fences.push(fence)
+        }
+        //console.log(Fences)
+        return Fences
+    }
+
+
+    fenceArray() {
+        const game = this
+        return game.getFences()
+    }
+
+
 
     start() {
         const game = Game;
@@ -92,9 +126,8 @@ export class Game {
 
         game.lives.Draw()
 
-        //const fences = await getFences(game.canvas)
-        const treasure = await addTreasure(game.canvas)
 
+        const treasure = await addTreasure(game.canvas)
         await createMaze(game.canvas, game.fences)
 
         //createTreasure(game.canvas, treasure)
@@ -282,7 +315,7 @@ async function StartGame(canvas, context, state) {
 }*!/*/
 
 
-export async function getFences(canvas) {
+/*export async function getFences(canvas) {
     let fenceObject;
 
     await fetch("../data/fences.json").then(function (response) {
@@ -307,7 +340,7 @@ export async function getFences(canvas) {
     return Fences
 
 
-}
+}*/
 
 async function createMaze(canvas, fences) {
     for (let i = 0; i < fences.length; i++) {
