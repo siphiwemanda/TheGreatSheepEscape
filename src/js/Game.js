@@ -8,35 +8,170 @@ import {generateRandomNumber, generateRandomNumberMaxThree} from "./utils.js";
 import {Carrot} from "./Carrot.js";
 import {Pepper} from "./Pepper.js";
 
-export async function Game(canvas, state) {
-    const game = Game;
-    game.canvas = canvas;
-    game.context = game.canvas.getContext('2d')
-
-    game.state = state
+const INITIAL = 1;
+const GAME_PLAYING = 2;
+const GAME_OVER = 3;
 
 
-    if (game.state === 1) {
-        return await LoadGame(canvas, state)
+export class Game {
+    constructor(canvas) {
+        const game = Game;
+        game.canvas = canvas;
+        game.context = game.canvas.getContext('2d')
+        game.currentState = INITIAL
+        game.addEventListener()
+        game.fences = getFences(game.canvas)
+        game.startTime = new Date()
+        game.sheepCounter = 0
     }
-    if (game.state === 2) {
-        return await StartGame(canvas, game.context, state)
-    }
-    if (game.state === 3) {
-        await endGame(canvas)
+
+    start() {
+        const game = Game;
+        window.requestAnimationFrame(function () {
+            game.runGameLoop();
+        });
     }
 
-    start()
 
+    /*
+        if (game.state === 1) {
+            return await LoadGame(canvas, state)
+        }
+        if (game.state === 2) {
+            return await StartGame(canvas, game.context, state)
+        }
+        if (game.state === 3) {
+            await endGame(canvas)
+        }
+
+    */
+
+
+    static async runGameLoop() {
+        const game = Game;
+        switch (game.currentState) {
+            case INITIAL:
+                // DRAW INITIAL SCREEN
+                await game.drawInitialScreen();
+                break;
+            case GAME_PLAYING:
+                // DRAW GAME PLAYING SCREEN
+                await game.drawGamePlayingScreen();
+                break;
+            case GAME_OVER:
+                // DRAW GAME OVER SCREEN
+                await game.drawGameOverScreen();
+                break;
+        }
+        window.requestAnimationFrame(function () {
+            game.runGameLoop();
+        });
+
+    }
+
+    static async drawInitialScreen() {
+        const game = Game;
+        const start = new LoadScreen(game.canvas)
+        await start.Draw()
+
+    }
+
+    static async drawGamePlayingScreen() {
+        const game = Game;
+
+        //game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
+        const background = new Background(game.canvas)
+        await background.Draw()
+
+        game.drawSheep()
+
+        /* const sheep = new Sheep(game.canvas)
+         await sheep.Draw()*/
+        const lives = new HealthScore(game.canvas)
+        lives.Draw()
+        //const fences = await getFences(game.canvas)
+        const treasure = await addTreasure(game.canvas)
+
+        await createMaze(game.canvas, game.fences)
+
+        //createTreasure(game.canvas, treasure)
+
+
+        this.context.font = '15px serif'
+        this.context.fillStyle = 'black'
+        this.context.fillText('game screen', 450, 30)
+        // GameEngine(game.canvas, game.context, fences, background, sheep, treasure, lives, game.currentState)
+
+    }
+
+    static async drawGameOverScreen() {
+        const game = Game;
+        const end = new EndGame(game.canvas)
+        await end.Draw()
+
+
+    }
+
+
+    static addEventListener() {
+
+        const game = this;
+        window.addEventListener('keydown', function (event) {
+            switch (game.currentState) {
+                case INITIAL:
+                    if (event.code === "Space") {
+                        game.currentState = GAME_PLAYING;
+                    }
+                    break;
+                case GAME_PLAYING:
+                    break;
+            }
+        });
+
+        // Key Listener
+        window.addEventListener('keydown', function (event) {
+            switch (game.currentState) {
+                case GAME_OVER:
+                    if (event.code === "Space") {
+                        console.log(event.code);
+                        game.currentState = GAME_PLAYING;
+                    }
+                    break;
+            }
+        });
+
+
+    }
+
+    static async drawSheep() {
+        const game = this;
+        const sheep = new Sheep(game.canvas)
+
+
+
+        let now = new Date()
+
+
+        if ((now.getMilliseconds() - game.startTime.getMilliseconds()) % 1 === 0) {
+
+            //console.log("start" + game.startTime.getMilliseconds())
+            //console.log("now" + now.getMilliseconds())
+
+            console.log(game.sheepCounter)
+            game.sheepCounter++
+            game.sheepCounter %= 6
+            sheep.DrawTile(game.sheepCounter)
+        }
+    }
 }
 
-function start () {
+/*function start () {
     window.webkitRequestAnimationFrame(function () {
         runGameLoop();
     })
-}
+}*/
 
-function runGameLoop() {
+/*function runGameLoop() {
     const game = this
     // controls the loop the game is currently in
     if (game.state === 1) {
@@ -44,19 +179,19 @@ function runGameLoop() {
 
     }
     if (game.state === 2) {
-        /*
-        return await StartGame(canvas, game.context, state)*/
+        /!*
+        return await StartGame(canvas, game.context, state)*!/
     }
     if (game.state === 3) {
         // await endGame(canvas)
     }
-}
+}*/
 
 async function LoadGame(canvas, state) {
     const start = new LoadScreen(canvas)
     await start.Draw()
     window.addEventListener('keydown', function (event) {
-        if (event.code === "Space"){
+        if (event.code === "Space") {
             state = 2
             Game(canvas, state)
         }
@@ -65,6 +200,7 @@ async function LoadGame(canvas, state) {
 
 async function StartGame(canvas, context, state) {
     const background = new Background(canvas)
+
     const sheep = new Sheep(canvas)
     const fences = await getFences(canvas)
     const treasure = await addTreasure(canvas)
@@ -72,12 +208,12 @@ async function StartGame(canvas, context, state) {
     await GameEngine(canvas, context, fences, background, sheep, treasure, lives, state)
 }
 
-async function endGame(canvas) {
+/*async function endGame(canvas) {
 
     const end = new EndGame(canvas)
     await end.Draw()
 
-}
+}*/
 
 
 export async function getFences(canvas) {
@@ -132,11 +268,15 @@ function createTreasure(canvas, treasure) {
     }
 }
 
-async function GameEngine(canvas, context, fences, background, sheep, treasure, lives, state) {
+function GameEngine(canvas, context, fences, background, sheep, treasure, lives, state) {
     window.requestAnimationFrame(animationLoop)
     console.log(state)
     let counter = 0;
     let start = new Date()
+    console.log(background)
+    background.DrawTile()
+    sheep.Draw()
+    lives.Draw()
 
 
     function animationLoop() {
@@ -196,6 +336,11 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure, 
 
             } else {
                 lives.score = lives.score - 1
+
+            }
+            if (lives.score <= 0) {
+                state = 3
+                Game(canvas, state)
 
             }
         }

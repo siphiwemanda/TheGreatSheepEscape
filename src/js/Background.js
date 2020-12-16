@@ -12,7 +12,7 @@ export class Background {
             const backgroundIMG = new Image()
             backgroundIMG.src = "../img/grass.png"
             backgroundIMG.onload = () => {
-                console.log(backgroundIMG)
+               // console.log(backgroundIMG)
                 for (let i = 0; i * backgroundWidth <= this.canvas.width; i++) {
                     for (let j = 0; j * backgroundHeight <= this.canvas.height; j++) {
                         this.context.drawImage(backgroundIMG, i * backgroundWidth, j * backgroundHeight)
