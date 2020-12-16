@@ -12,12 +12,8 @@ let fence =[{
     y: 200
 }]
 let treasure = [{
-    x: 52,
-    xx: 481,
-    xxx: 799,
-    y: 481,
-    yy: 63,
-    yyy: 124
+    x: 600,
+    y: 600,
 }]
 
 
@@ -48,8 +44,11 @@ describe('#Game()', function () {
     it('should check that they was a sheep/fence collision', function () {
         expect(CollisionCheck(100,200,fence, treasure)).to.be.false
     });
+    it('should check that they was no sheep/treasure collision', function () {
+        expect(CollisionCheck(300,300,fence, treasure)).to.be.true
+    });
     it('should check that they was a sheep/treasure collision', function () {
-        expect(CollisionCheck(100,200,fence, treasure)).to.be.false
+        expect(CollisionCheck(600,600,fence, treasure)).to.be.false
     });
 })
 

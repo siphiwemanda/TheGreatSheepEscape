@@ -4,8 +4,9 @@ import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
 import {FenceFactory} from './FenceFactory.js'
 import {HealthScore} from './HealthScore.js'
-import {Treasure} from "./Treasure.js";
 import {generateRandomNumber, generateRandomNumberMaxThree} from "./utils.js";
+import {Carrot} from "./Carrot.js";
+import {Pepper} from "./Pepper.js";
 
 export async function Game(canvas, state) {
     const game = Game;
@@ -92,17 +93,18 @@ export async function addTreasure(canvas) {
 
     const treasureArray = []
     for (let i = 0; i < generateRandomNumberMaxThree(); i++) {
-        let treasure = new Treasure(canvas, generateRandomNumber(), generateRandomNumber(), generateRandomNumber(), generateRandomNumber(), generateRandomNumber(), generateRandomNumber())
-
-        treasureArray.push(treasure)
+        let carrot = new Carrot(canvas, generateRandomNumber(), generateRandomNumber())
+        let pepper = new Pepper(canvas, generateRandomNumber(), generateRandomNumber())
+        treasureArray.push(carrot,pepper)
     }
     console.log(treasureArray)
     return treasureArray
 }
 
 function createTreasure(canvas, treasure) {
+
     for (let i = 0; i < treasure.length; i++) {
-        treasure[i].Draw(treasure[i].x, treasure[i].xx, treasure[i].xxx, treasure[i].y, treasure[i].yy, treasure[i].yyy)
+        treasure[i].Draw(treasure[i].x, treasure[i].y)
     }
 }
 
@@ -171,7 +173,7 @@ async function GameEngine(canvas, context, fences, background, sheep, treasure) 
 
 }
 
-export function CollisionCheck(sheepX, sheepY, fences, treasure) {
+export function CollisionCheck(sheepX, sheepY, fences, fruits) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
@@ -182,9 +184,6 @@ export function CollisionCheck(sheepX, sheepY, fences, treasure) {
     //vertical fence height - 128
     //horizontal fence width - 128
     //horizontal fence height = 64
-
-    console.log(fences)
-    console.log(treasure)
     fences.forEach(fence => {
             if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128)) {
                 //console.log(fence.x)
@@ -202,15 +201,14 @@ export function CollisionCheck(sheepX, sheepY, fences, treasure) {
         }
     )
 
-    treasure.forEach(fruit => {
-        console.log(fruit.x, fruit.y, fruit.xx, fruit.yy, fruit.xxx, fruit.yyy)
+    fruits.forEach(fruit => {
+        console.log(fruit.x, fruit.y)
         console.log(sheepY, sheepX)
-        if ((fruit.x >= sheepX && sheepX <= fruit.x  && sheepY >= fruit.y && sheepY <= fruit.y) ||
-            (fruit.xx >= sheepX && sheepX <= fruit.xx  && sheepY >= fruit.yy && sheepY <= fruit.yy) ||
-            (fruit.xxx >= sheepX && sheepX <= fruit.xxx  && sheepY >= fruit.yyy && sheepY <= fruit.yyy)){
+        if (fruit.x >= sheepX && sheepX <= fruit.x+32  && sheepY >= fruit.y && sheepY <= fruit.y+32){
+            console.log(fruit)
+            fruits.splice(fruit)
+            //noCollision = false
 
-            console.log("nom nom nom")
-            //(fruit.x >= sheepX && sheepX <= fruit.x  && sheepY >= fruit.y && sheepY <= fruit.y)
         }
     })
 
@@ -229,4 +227,6 @@ export function CollisionCheck(sheepX, sheepY, fences, treasure) {
 
 
 }
+
+
 
