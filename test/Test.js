@@ -3,10 +3,10 @@ import chai from 'chai';
 const expect = chai.expect;
 const assert = chai.assert;
 
-import {Game, addTreasure} from '../src/js/Game.js'
-import {generateRandomNumber} from "../src/js/utils.js";
+import {Game, addTreasure, CollisionCheck} from '../src/js/Game.js'
+import {generateRandomNumber, generateRandomNumberMaxThree} from "../src/js/utils.js";
 
-
+let fence =[]
 
 
 describe('#Game()', function () {
@@ -26,6 +26,12 @@ describe('#Game()', function () {
 
     it('should return a random number', function () {
         expect(generateRandomNumber()).to.be.a('number')
+    });
+    it('should return a random number with a maximum of three', function () {
+        expect(generateRandomNumberMaxThree()).to.be.a('number')
+    });
+    it('should check that they where no sheep/fence collision', function () {
+        expect(CollisionCheck(100,200,fence)).to.be.true
     });
 })
 
