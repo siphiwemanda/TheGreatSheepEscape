@@ -3,7 +3,7 @@ import {Background} from './Background.js'
 import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
 import {FenceFactory} from './FenceFactory.js'
-import {HealthScore} from './HealthScore.js'
+import {Lives} from './Lives.js'
 import {generateRandomNumber, generateRandomNumberMaxThree} from "./utils.js";
 import {Carrot} from "./Carrot.js";
 import {Pepper} from "./Pepper.js";
@@ -23,6 +23,11 @@ export class Game {
         game.fences = getFences(game.canvas)
         game.startTime = new Date()
         game.sheepCounter = 0
+        game.sheep = new Sheep(game.canvas)
+        game.lives = new Lives(game.canvas)
+
+        console.log(game.sheep)
+        console.log(game.lives)
     }
 
     start() {
@@ -83,12 +88,10 @@ export class Game {
         const background = new Background(game.canvas)
         await background.Draw()
 
-        game.drawSheep()
+        await game.drawSheep()
 
-        /* const sheep = new Sheep(game.canvas)
-         await sheep.Draw()*/
-        const lives = new HealthScore(game.canvas)
-        lives.Draw()
+        game.lives.Draw()
+
         //const fences = await getFences(game.canvas)
         const treasure = await addTreasure(game.canvas)
 
@@ -100,7 +103,7 @@ export class Game {
         this.context.font = '15px serif'
         this.context.fillStyle = 'black'
         this.context.fillText('game screen', 450, 30)
-        // GameEngine(game.canvas, game.context, fences, background, sheep, treasure, lives, game.currentState)
+
 
     }
 
@@ -140,12 +143,75 @@ export class Game {
             }
         });
 
+        let fences = []
+        let treasure = []
+        window.addEventListener("keydown", function (event) {
+            if (event.code === "ArrowUp") {
+                let TemporaryY = game.sheep.y - 5
+                if (CollisionCheck(game.sheep.x, TemporaryY, fences, treasure)) {
+                    game.sheep.y = game.sheep.y - 5
+                }
+                else {
+                    game.lives.score  -=  1
+                    if (game.lives.score <= 0){
+                        game.currentState = GAME_OVER}
+                }
+            }
+            if (event.code === "ArrowDown") {
+                console.log(event.code)
+
+                let TemporaryY = game.sheep.y + 5
+                if (CollisionCheck(game.sheep.x, TemporaryY, fences, treasure)) {
+                    game.sheep.y = game.sheep.y + 5
+                }
+                else {
+                    game.lives.score  -=  1
+                    if (game.lives.score <= 0){
+                        game.currentState = GAME_OVER}
+
+                }
+            }
+            if (event.code === "ArrowRight") {
+                console.log(event.code)
+                let TemporaryX = game.sheep.x + 5
+                if (CollisionCheck(TemporaryX, game.sheep.y, fences, treasure)) {
+                    game.sheep.x = game.sheep.x + 5
+
+                }
+                else {
+                    game.lives.score  -=  1
+                    if (game.lives.score <= 0){
+                        game.currentState = GAME_OVER}
+
+                }
+            }
+            if (event.code === "ArrowLeft") {
+                console.log(event.code)
+                let TemporaryX = game.sheep.x - 5
+                if (CollisionCheck(TemporaryX, game.sheep.y, fences, treasure)) {
+                    game.sheep.x = game.sheep.x - 5
+                }
+                else {
+                    game.lives.score  -=  1
+                    if (game.lives.score <= 0){
+                        game.currentState = GAME_OVER}
+
+                }
+
+
+            }
+        })
+
+
+
+
+
 
     }
 
     static async drawSheep() {
         const game = this;
-        const sheep = new Sheep(game.canvas)
+
 
 
 
@@ -157,10 +223,10 @@ export class Game {
             //console.log("start" + game.startTime.getMilliseconds())
             //console.log("now" + now.getMilliseconds())
 
-            console.log(game.sheepCounter)
+            //console.log(game.sheepCounter)
             game.sheepCounter++
             game.sheepCounter %= 6
-            sheep.DrawTile(game.sheepCounter)
+            game.sheep.DrawTile(game.sheepCounter)
         }
     }
 }
@@ -187,7 +253,7 @@ export class Game {
     }
 }*/
 
-async function LoadGame(canvas, state) {
+/*async function LoadGame(canvas, state) {
     const start = new LoadScreen(canvas)
     await start.Draw()
     window.addEventListener('keydown', function (event) {
@@ -204,16 +270,16 @@ async function StartGame(canvas, context, state) {
     const sheep = new Sheep(canvas)
     const fences = await getFences(canvas)
     const treasure = await addTreasure(canvas)
-    const lives = new HealthScore(canvas)
+    const lives = new Lives(canvas)
     await GameEngine(canvas, context, fences, background, sheep, treasure, lives, state)
 }
 
-/*async function endGame(canvas) {
+/!*async function endGame(canvas) {
 
     const end = new EndGame(canvas)
     await end.Draw()
 
-}*/
+}*!/*/
 
 
 export async function getFences(canvas) {
@@ -268,6 +334,7 @@ function createTreasure(canvas, treasure) {
     }
 }
 
+/*
 function GameEngine(canvas, context, fences, background, sheep, treasure, lives, state) {
     window.requestAnimationFrame(animationLoop)
     console.log(state)
@@ -361,6 +428,7 @@ function GameEngine(canvas, context, fences, background, sheep, treasure, lives,
 
 
 }
+*/
 
 
 export function CollisionCheck(sheepX, sheepY, fences, fruits) {
