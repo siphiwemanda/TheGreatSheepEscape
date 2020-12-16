@@ -201,16 +201,21 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
         }
     )
 
-    fruits.forEach(fruit => {
-        console.log(fruit.x, fruit.y)
-        console.log(sheepY, sheepX)
+/*    fruits.forEach(fruit => {
         if (fruit.x >= sheepX && sheepX <= fruit.x+32  && sheepY >= fruit.y && sheepY <= fruit.y+32){
-            console.log(fruit)
             fruits.splice(fruit)
             //noCollision = false
-
         }
-    })
+    })*/
+
+    for (let i = 0; i < fruits.length; i++) {
+        if ((fruits[i].x >= sheepX && sheepX <= fruits[i].x+32)  && (fruits[i].y >= sheepY && sheepY <= fruits[i].y+32)){
+            fruits.splice(fruits[i], 1)
+            //noCollision = false
+        }
+    }
+
+    console.log(fruits)
 
 
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
