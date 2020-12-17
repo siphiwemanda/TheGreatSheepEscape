@@ -9,7 +9,6 @@ export async function getFences(canvas) {
     await fetch("../data/fences.json").then(function (response) {
         return response.json()
     }).then(function (JSONObject) {
-        //console.log(JSONObject)
         fenceObject = JSONObject
     }).catch(function (error) {
         console.log('Data failed to load')
@@ -25,7 +24,6 @@ export async function getFences(canvas) {
         fence.src = fenceObject.Fences[i].src
         Fences.push(fence)
     }
-    //console.log(Fences)
     return Fences
 }
 
@@ -37,6 +35,5 @@ export async function addFruit(canvas) {
         let pepper = new Pepper(canvas, generateRandomNumber(), generateRandomNumber())
         fruitArray.push(carrot, pepper)
     }
-    //console.log(treasureArray)
     return fruitArray
 }

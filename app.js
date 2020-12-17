@@ -1,6 +1,8 @@
+import "regenerator-runtime/runtime.js";
 import express from 'express';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+//import "babel-core/register";
 import "@babel/polyfill";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

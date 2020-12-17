@@ -41,7 +41,7 @@ export class Game {
         switch (game.currentState) {
             case INITIAL:
                 // DRAW INITIAL SCREEN
-                await game.drawInitialScreen();
+                game.drawInitialScreen();
                 break;
             case GAME_PLAYING:
                 // DRAW GAME PLAYING SCREEN
@@ -119,6 +119,9 @@ export class Game {
                 if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y - 5
                 }
+                if (game.fruitCollision()){
+
+                }
                 else {
                     game.lives.score  -=  1
                     if (game.lives.score <= 0){
@@ -126,8 +129,6 @@ export class Game {
                 }
             }
             if (event.code === "ArrowDown") {
-                console.log(event.code)
-
                 let TemporaryY = game.sheep.y + 5
                 if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y + 5
@@ -140,7 +141,6 @@ export class Game {
                 }
             }
             if (event.code === "ArrowRight") {
-                console.log(event.code)
                 let TemporaryX = game.sheep.x + 5
                 if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
                     game.sheep.x = game.sheep.x + 5
@@ -154,7 +154,6 @@ export class Game {
                 }
             }
             if (event.code === "ArrowLeft") {
-                console.log(event.code)
                 let TemporaryX = game.sheep.x - 5
                 if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
                     game.sheep.x = game.sheep.x - 5
@@ -191,6 +190,25 @@ export class Game {
         const game = this;
         for (let i = 0; i < game.fences.length; i++) {
             game.fences[i].DrawTile(game.fences[i].src, game.fences[i].x, game.fences[i].y)
+
+
+
+
+        }
+    }
+    static fruitCollision(){
+        let noFruit = true
+
+        const game = this;
+        for (let i = 0; i < game.fruit.length; i++) {
+
+            if (game.sheep.x >= game.fruit[i].x && game.sheep.x <= game.fruit[i].x + 32 && game.sheep.y >= game.fruit[i].y && game.sheep.y <= game.fruit[i].y + 32) {
+                console.log('nom')
+                //game.fruit.splice(game.fruit[i], 1)
+
+
+
+            }
         }
     }
 }
