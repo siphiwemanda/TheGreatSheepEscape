@@ -3,14 +3,10 @@ import {Background} from './Background.js'
 import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
 import {Lives} from './Lives.js'
-import {generateRandomNumber, generateRandomNumberMaxThree} from "./utils.js";
-import {Carrot} from "./Carrot.js";
-import {Pepper} from "./Pepper.js";
 
 const INITIAL = 1;
 const GAME_PLAYING = 2;
 const GAME_OVER = 3;
-
 
 export class Game {
     constructor(canvas, fences, fruit) {

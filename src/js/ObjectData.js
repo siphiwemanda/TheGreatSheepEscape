@@ -6,7 +6,6 @@ import {Pepper} from "./Pepper.js";
 export async function getFences(canvas) {
 
     let fenceObject;
-    console.log(canvas)
     await fetch("../data/fences.json").then(function (response) {
         return response.json()
     }).then(function (JSONObject) {

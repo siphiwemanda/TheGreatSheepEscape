@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "express": "^4.17.1",
     "mocha": "^8.2.1"
   },
@@ -19,7 +20,15 @@
     "node": "14.15.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.12.10",
     "chai": "^4.2.0",
     "request": "^2.88.2"
-  }
+  },
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ]
 }

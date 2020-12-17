@@ -3,8 +3,9 @@ import chai from 'chai';
 const expect = chai.expect;
 const assert = chai.assert;
 
-import {Game, addTreasure, CollisionCheck} from '../src/js/Game.js'
+import {CollisionCheck} from '../src/js/Game.js'
 import {generateRandomNumber, generateRandomNumberMaxThree} from "../src/js/utils.js";
+import {addFruit} from "../src/js/ObjectData.js";
 
 let fence =[{
     src: "../img/Attributes/FenceVertical.png",
