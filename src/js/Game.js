@@ -58,8 +58,8 @@ export class Game {
 
     static drawInitialScreen() {
         const game = Game;
-
-         game.innitalScreen.Draw()
+        game.context.clearRect(500, 400, 400, 250);
+        game.innitalScreen.Draw()
 
 
     }
@@ -113,14 +113,12 @@ export class Game {
         });
 
 
-        let treasure = []
         window.addEventListener("keydown", function (event) {
             if (event.code === "ArrowUp") {
                 let TemporaryY = game.sheep.y - 5
-                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
+                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences)) {
                     game.sheep.y = game.sheep.y - 5
-                }
-                else if (game.fruitCollision()) {
+                } else if (game.fruitCollision()) {
                     console.log("beep")
 
                 } else {
@@ -132,22 +130,23 @@ export class Game {
             }
             if (event.code === "ArrowDown") {
                 let TemporaryY = game.sheep.y + 5
-                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
+                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences)) {
                     game.sheep.y = game.sheep.y + 5
-                }
-                else if (game.fruitCollision()) {
+                } else if (game.fruitCollision()) {
                     console.log("beep")
-                }else {
+                } else {
                     game.lives.score -= 1
                     if (game.lives.score <= 0) {
                         game.currentState = GAME_OVER
                     }
-
+                    if (game.lives >= 0 && (game.sheep.x === 944 || game.sheep.y === 672)){
+                        game.currentState = GAME_OVER
+                    }
                 }
             }
             if (event.code === "ArrowRight") {
                 let TemporaryX = game.sheep.x + 5
-                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
+                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences)) {
                     game.sheep.x = game.sheep.x + 5
 
                 } else {
@@ -160,7 +159,7 @@ export class Game {
             }
             if (event.code === "ArrowLeft") {
                 let TemporaryX = game.sheep.x - 5
-                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
+                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences)) {
                     game.sheep.x = game.sheep.x - 5
                 } else {
                     game.lives.score -= 1
@@ -203,18 +202,19 @@ export class Game {
     static fruitCollision() {
         let noFruit = true
         const game = this;
-        for (let i = 0; i < game.fruit.length; i++) {
-
-            if (game.sheep.x >= game.fruit[i].x && game.sheep.x <= game.fruit[i].x + 32 && game.sheep.y >= game.fruit[i].y && game.sheep.y <= game.fruit[i].y + 32) {
+        game.fruit.forEach(nom => {
+            if (game.sheep.x >= nom.x && game.sheep.x <= nom.x + 32 && game.sheep.y >= nom.y && game.sheep.y <= nom.y + 32) {
                 console.log('nom')
                 return noFruit = false
                 //game.fruit.splice(game.fruit[i], 1)
+            }else {
+                return noFruit
             }
-        }
+        })
     }
 }
 
-export function CollisionCheck(sheepX, sheepY, fences, fruits) {
+export function CollisionCheck(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
@@ -226,11 +226,11 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
                 noCollision = false
                 //console.log(noCollision)
             }
-        if (fence.src.includes('Horizontal') && (sheepY >= fence.y - 64 && sheepY <= fence.y + 64 && sheepX + 50 >= fence.x && sheepX + 50 <= fence.x + 128)) {
-            //console.log(fence.x)
-            noCollision = false
-            //console.log(noCollision)
-        }
+            if (fence.src.includes('Horizontal') && (sheepY >= fence.y - 64 && sheepY <= fence.y + 64 && sheepX + 50 >= fence.x && sheepX + 50 <= fence.x + 128)) {
+                //console.log(fence.x)
+                noCollision = false
+                //console.log(noCollision)
+            }
         }
     )
     if (sheepX <= leftEdge || sheepX >= rightEdge) {

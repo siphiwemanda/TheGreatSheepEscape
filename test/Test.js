@@ -12,7 +12,7 @@ let fence =[{
     x: 100,
     y: 200
 }]
-let treasure = [{
+let fruit = [{
     x: 600,
     y: 600,
 }]
@@ -20,36 +20,28 @@ let treasure = [{
 
 describe('#Game()', function () {
 
-  /*  it('should return something fun ', (done) => {
-        addTreasure(Game.canvas, (sub) => {
-            expect(sub).to.be('array')
-            done()
-        })
-    })
 
-    it('assertion success', async () => {
-        console.log(Game.canvas)
-        const result = await addTreasure(Game.canvas);
-        expect(result).to.equal('promise resolved');
-    });*/
-
-    it('should return a random number', function () {
-        expect(generateRandomNumber()).to.be.a('number')
-    });
-    it('should return a random number with a maximum of three', function () {
-        expect(generateRandomNumberMaxThree()).to.be.a('number')
-    });
     it('should check that they where no sheep/fence collision', function () {
-        expect(CollisionCheck(500,400,fence, treasure)).to.be.true
+        expect(CollisionCheck(500,400,fence)).to.be.true
     });
     it('should check that they was a sheep/fence collision', function () {
-        expect(CollisionCheck(100,200,fence, treasure)).to.be.false
+        expect(CollisionCheck(100,200,fence)).to.be.false
     });
     it('should check that they was no sheep/treasure collision', function () {
-        expect(CollisionCheck(300,300,fence, treasure)).to.be.true
+        expect(CollisionCheck(300,300,fence)).to.be.true
     });
     it('should check that they was a sheep/treasure collision', function () {
-        expect(CollisionCheck(600,600,fence, treasure)).to.be.true
+        expect(CollisionCheck(600,600,fence)).to.be.true
     });
 })
+
+
+
+/*describe("GameClass", () =>{
+    const gameClass = new Game(canvas, fence, fruit)
+    it('should do something we hope ', function () {
+        expect(gameclass.start()).to.be.true
+    });
+
+})*/
 
