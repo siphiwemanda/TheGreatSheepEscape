@@ -2,7 +2,6 @@ import {Sheep} from './Sheep.js'
 import {Background} from './Background.js'
 import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
-import {FenceFactory} from './FenceFactory.js'
 import {Lives} from './Lives.js'
 import {generateRandomNumber, generateRandomNumberMaxThree} from "./utils.js";
 import {Carrot} from "./Carrot.js";
@@ -14,55 +13,23 @@ const GAME_OVER = 3;
 
 
 export class Game {
-    constructor(canvas) {
+    constructor(canvas, fences, fruit) {
         const game = Game;
         game.canvas = canvas;
         game.context = game.canvas.getContext('2d')
         game.currentState = INITIAL
         game.addEventListener()
-        game.fences = this.fenceArray()
+        game.fences = fences
+        game.fruit = fruit
         game.startTime = new Date()
         game.sheepCounter = 0
+        game.innitalScreen = new LoadScreen(game.canvas)
+        game.gameOverScreen = new EndGame(game.canvas)
         game.sheep = new Sheep(game.canvas)
         game.lives = new Lives(game.canvas)
 
-        console.log(game.sheep)
-        console.log(game.lives)
+
     }
-    async getFences() {
-        const game = this;
-        let fenceObject;
-        console.log(game.canvas)
-        await fetch("../data/fences.json").then(function (response) {
-            return response.json()
-        }).then(function (JSONObject) {
-            //console.log(JSONObject)
-            fenceObject = JSONObject
-        }).catch(function (error) {
-            console.log('Data failed to load')
-            console.log(error)
-        })
-
-        const Fences = []
-        for (let i = 0; i < fenceObject.Fences.length; i++) {
-
-            let fence = new FenceFactory(game.canvas)
-            fence.x = fenceObject.Fences[i].x
-            fence.y = fenceObject.Fences[i].y
-            fence.src = fenceObject.Fences[i].src
-            Fences.push(fence)
-        }
-        //console.log(Fences)
-        return Fences
-    }
-
-
-    fenceArray() {
-        const game = this
-        return game.getFences()
-    }
-
-
 
     start() {
         const game = Game;
@@ -97,9 +64,7 @@ export class Game {
 
     static async drawInitialScreen() {
         const game = Game;
-        const start = new LoadScreen(game.canvas)
-        await start.Draw()
-
+        await game.innitalScreen.Draw()
     }
 
     static async drawGamePlayingScreen() {
@@ -108,31 +73,18 @@ export class Game {
         //game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
         const background = new Background(game.canvas)
         await background.Draw()
+        await game.createMaze()
+        await game.createTreasure()
 
         await game.drawSheep()
 
         game.lives.Draw()
 
-
-        const treasure = await addTreasure(game.canvas)
-        await createMaze(game.canvas, game.fences)
-
-
-
-
-        this.context.font = '15px serif'
-        this.context.fillStyle = 'black'
-        this.context.fillText('game screen', 450, 30)
-
-
     }
 
     static async drawGameOverScreen() {
         const game = Game;
-        const end = new EndGame(game.canvas)
-        await end.Draw()
-
-
+        await game.gameOverScreen.Draw()
     }
 
 
@@ -163,12 +115,12 @@ export class Game {
             }
         });
 
-        let fences = []
+
         let treasure = []
         window.addEventListener("keydown", function (event) {
             if (event.code === "ArrowUp") {
                 let TemporaryY = game.sheep.y - 5
-                if (CollisionCheck(game.sheep.x, TemporaryY, fences, treasure)) {
+                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y - 5
                 }
                 else {
@@ -181,7 +133,7 @@ export class Game {
                 console.log(event.code)
 
                 let TemporaryY = game.sheep.y + 5
-                if (CollisionCheck(game.sheep.x, TemporaryY, fences, treasure)) {
+                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y + 5
                 }
                 else {
@@ -194,7 +146,7 @@ export class Game {
             if (event.code === "ArrowRight") {
                 console.log(event.code)
                 let TemporaryX = game.sheep.x + 5
-                if (CollisionCheck(TemporaryX, game.sheep.y, fences, treasure)) {
+                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
                     game.sheep.x = game.sheep.x + 5
 
                 }
@@ -208,7 +160,7 @@ export class Game {
             if (event.code === "ArrowLeft") {
                 console.log(event.code)
                 let TemporaryX = game.sheep.x - 5
-                if (CollisionCheck(TemporaryX, game.sheep.y, fences, treasure)) {
+                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
                     game.sheep.x = game.sheep.x - 5
                 }
                 else {
@@ -221,159 +173,31 @@ export class Game {
 
             }
         })
-
-
-
-
-
-
     }
 
     static async drawSheep() {
         const game = this;
-
-
-
-
         let now = new Date()
 
-
         if ((now.getMilliseconds() - game.startTime.getMilliseconds()) % 1 === 0) {
-
-            //console.log("start" + game.startTime.getMilliseconds())
-            //console.log("now" + now.getMilliseconds())
-
-            //console.log(game.sheepCounter)
             game.sheepCounter++
             game.sheepCounter %= 6
             game.sheep.DrawTile(game.sheepCounter)
         }
     }
-}
-
-
-
-async function createMaze(canvas, fences) {
-    for (let i = 0; i < fences.length; i++) {
-        fences[i].DrawTile(fences[i].src, fences[i].x, fences[i].y)
+    static createTreasure() {
+        const game = this;
+        for (let i = 0; i < game.fruit.length; i++) {
+            game.fruit[i].Draw(game.fruit[i].x, game.fruit[i].y)
+        }
+    }
+    static createMaze() {
+        const game = this;
+        for (let i = 0; i < game.fences.length; i++) {
+            game.fences[i].DrawTile(game.fences[i].src, game.fences[i].x, game.fences[i].y)
+        }
     }
 }
-
-export async function addTreasure(canvas) {
-
-    const treasureArray = []
-    for (let i = 0; i < generateRandomNumberMaxThree(); i++) {
-        let carrot = new Carrot(canvas, generateRandomNumber(), generateRandomNumber())
-        let pepper = new Pepper(canvas, generateRandomNumber(), generateRandomNumber())
-        treasureArray.push(carrot, pepper)
-    }
-    //console.log(treasureArray)
-    return treasureArray
-}
-
-function createTreasure(canvas, treasure) {
-
-    for (let i = 0; i < treasure.length; i++) {
-        treasure[i].Draw(treasure[i].x, treasure[i].y)
-    }
-}
-
-/*
-function GameEngine(canvas, context, fences, background, sheep, treasure, lives, state) {
-    window.requestAnimationFrame(animationLoop)
-    console.log(state)
-    let counter = 0;
-    let start = new Date()
-    console.log(background)
-    background.DrawTile()
-    sheep.Draw()
-    lives.Draw()
-
-
-    function animationLoop() {
-
-        let now = new Date()
-        if (now - start >= 100) {
-            start = now
-            context.clearRect(0, 0, canvas.width, canvas.height)
-
-            counter++
-            counter %= 6
-
-            background.DrawTile()
-
-            createMaze(canvas, fences)
-
-            createTreasure(canvas, treasure)
-
-            lives.Draw()
-            sheep.DrawTile(counter)
-
-        }
-        window.requestAnimationFrame(animationLoop)
-
-    }
-
-
-    window.addEventListener("keydown", function (event) {
-        if (event.code === "ArrowUp") {
-            console.log(event.code)
-            let TemporaryY = sheep.y - 5
-            if (CollisionCheck(sheep.x, TemporaryY, fences, treasure)) {
-                sheep.y = sheep.y - 5
-            } else {
-                lives.score = lives.score - 1
-
-
-            }
-        }
-        if (event.code === "ArrowDown") {
-            console.log(event.code)
-
-            let TemporaryY = sheep.y + 5
-            if (CollisionCheck(sheep.x, TemporaryY, fences, treasure)) {
-                sheep.y = sheep.y + 5
-            } else {
-                lives.score = lives.score - 1
-
-            }
-
-        }
-        if (event.code === "ArrowRight") {
-            console.log(event.code)
-            let TemporaryX = sheep.x + 5
-            if (CollisionCheck(TemporaryX, sheep.y, fences, treasure)) {
-                sheep.x = sheep.x + 5
-
-            } else {
-                lives.score = lives.score - 1
-
-            }
-            if (lives.score <= 0) {
-                state = 3
-                Game(canvas, state)
-
-            }
-        }
-        if (event.code === "ArrowLeft") {
-            console.log(event.code)
-            let TemporaryX = sheep.x - 5
-            if (CollisionCheck(TemporaryX, sheep.y, fences, treasure)) {
-                sheep.x = sheep.x - 5
-            } else {
-                lives.score = lives.score - 1
-
-            }
-
-
-        }
-
-    })
-
-
-}
-*/
-
 
 export function CollisionCheck(sheepX, sheepY, fences, fruits) {
     let noCollision = true

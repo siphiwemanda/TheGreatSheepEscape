@@ -25,4 +25,5 @@ export class FenceFactory {
 
         this.context.drawImage(this.img, this.x, this.y)
     }
+
 }

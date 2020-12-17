@@ -3,7 +3,7 @@ export class Lives {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
 
-        this.score = 10
+        this.score = 20
         this.x = 1100
         this. y = 20
 

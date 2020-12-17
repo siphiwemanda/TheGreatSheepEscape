@@ -15,7 +15,7 @@ export class EndGame extends LoadScreen{
         this.context.fillStyle = 'black'
         this.context.fillText('press space to replay', 510, 250)
 
-        return new Promise(resolve => {
+
             this.Pink = new Image()
             this.Pink.src = "../img/sheep/PinkSheepIdle.png"
             this.Pink.onload = () => {
@@ -42,8 +42,7 @@ export class EndGame extends LoadScreen{
 
             }
 
-            resolve()
-        })
+
 
     }
 
