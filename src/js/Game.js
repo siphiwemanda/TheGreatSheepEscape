@@ -116,7 +116,7 @@ export class Game {
         window.addEventListener("keydown", function (event) {
             if (event.code === "ArrowUp") {
                 let TemporaryY = game.sheep.y - 5
-                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences)) {
+                if (CollisionFencevsSheep(game.sheep.x, TemporaryY, game.fences)) {
                     game.sheep.y = game.sheep.y - 5
                 } else if (game.fruitCollision()) {
                     console.log("beep")
@@ -130,7 +130,7 @@ export class Game {
             }
             if (event.code === "ArrowDown") {
                 let TemporaryY = game.sheep.y + 5
-                if (CollisionCheck(game.sheep.x, TemporaryY, game.fences)) {
+                if (CollisionFencevsSheep(game.sheep.x, TemporaryY, game.fences)) {
                     game.sheep.y = game.sheep.y + 5
                 } else if (game.fruitCollision()) {
                     console.log("beep")
@@ -146,7 +146,7 @@ export class Game {
             }
             if (event.code === "ArrowRight") {
                 let TemporaryX = game.sheep.x + 5
-                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences)) {
+                if (CollisionFencevsSheep(TemporaryX, game.sheep.y, game.fences)) {
                     game.sheep.x = game.sheep.x + 5
 
                 } else {
@@ -159,7 +159,7 @@ export class Game {
             }
             if (event.code === "ArrowLeft") {
                 let TemporaryX = game.sheep.x - 5
-                if (CollisionCheck(TemporaryX, game.sheep.y, game.fences)) {
+                if (CollisionFencevsSheep(TemporaryX, game.sheep.y, game.fences)) {
                     game.sheep.x = game.sheep.x - 5
                 } else {
                     game.lives.score -= 1
@@ -214,7 +214,7 @@ export class Game {
     }
 }
 
-export function CollisionCheck(sheepX, sheepY, fences) {
+export function CollisionFencevsSheep(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
