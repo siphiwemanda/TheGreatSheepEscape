@@ -26,8 +26,11 @@ the app should be listening at
 ```
 http://localhost:3001/
 ```
+test can be run by navigating to the root directory and runnning 
 
-
+```
+npm test
+```
 ### Hosted Version 
 
 The game is hosted on heroku at : 
