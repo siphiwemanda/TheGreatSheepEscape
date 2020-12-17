@@ -5,6 +5,8 @@ export class LoadScreen {
         this.width = this.canvas.width
         this.height = this.canvas.height
         this.cellWidth = 136;
+        this.pinkimg = new Image()
+        this.pinkSheepsrc = "../img/sheep/PinkSheepIdle.png"
 
         this.cellHeight = 96;
 
@@ -23,37 +25,33 @@ export class LoadScreen {
         this.context.fillText('Escape Olde Worlde Farm', 350, 200)
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
-        this.context.fillText('click to start', 510, 250)
+        this.context.fillText('press space to start', 510, 250)
 
-        return new Promise(resolve => {
-            this.Pink = new Image()
-            this.Pink.src = "../img/sheep/PinkSheepIdle.png"
-            this.Pink.onload = () => {
-                this.context.drawImage(this.Pink, this.cellWidth, 0, this.cellWidth, this.cellHeight, 350, 300, this.cellHeight, this.cellHeight)
+        this.Pink = new Image()
+        this.Pink.src = "../img/sheep/PinkSheepIdle.png"
+        this.Pink.onload = () => {
+            this.context.drawImage(this.Pink, this.cellWidth, 0, this.cellWidth, this.cellHeight, 350, 300, this.cellHeight, this.cellHeight)
+        }
+        this.yellow = new Image()
+        this.yellow.src = "../img/sheep/yellowSheepIdle.png"
+        this.yellow.onload = () => {
+            this.context.drawImage(this.yellow, this.cellWidth, 0, this.cellWidth, this.cellHeight, 500, 300, this.cellHeight, this.cellHeight)
 
-            }
-            this.yellow = new Image()
-            this.yellow.src = "../img/sheep/yellowSheepIdle.png"
-            this.yellow.onload = () => {
-                this.context.drawImage(this.yellow, this.cellWidth, 0, this.cellWidth, this.cellHeight, 500, 300, this.cellHeight, this.cellHeight)
+        }
 
-            }
+        this.white = new Image()
+        this.white.src = "../img/sheep/whiteSheepIdle.png"
+        this.white.onload = () => {
+            this.context.drawImage(this.white, this.cellWidth, 0, this.cellWidth, this.cellHeight, 650, 300, this.cellHeight, this.cellHeight)
 
-            this.white = new Image()
-            this.white.src = "../img/sheep/whiteSheepIdle.png"
-            this.white.onload = () => {
-                this.context.drawImage(this.white, this.cellWidth, 0, this.cellWidth, this.cellHeight, 650, 300, this.cellHeight, this.cellHeight)
+        }
+        this.black = new Image()
+        this.black.src = "../img/sheep/blackSheepIdle.png"
+        this.black.onload = () => {
+            this.context.drawImage(this.black, this.cellWidth, 0, this.cellWidth, this.cellHeight, 800, 300, this.cellHeight, this.cellHeight)
 
-            }
-            this.black = new Image()
-            this.black.src = "../img/sheep/blackSheepIdle.png"
-            this.black.onload = () => {
-                this.context.drawImage(this.black, this.cellWidth, 0, this.cellWidth, this.cellHeight, 800, 300, this.cellHeight, this.cellHeight)
+        }
 
-            }
-
-            resolve()
-        })
 
     }
 }
