@@ -25,6 +25,9 @@ export class Game {
         game.lives = new Lives(game.canvas)
 
 
+
+
+
     }
 
     start() {
@@ -34,14 +37,12 @@ export class Game {
         });
     }
 
-
-
     static async runGameLoop() {
         const game = Game;
         switch (game.currentState) {
             case INITIAL:
                 // DRAW INITIAL SCREEN
-                game.drawInitialScreen();
+                await game.drawInitialScreen();
                 break;
             case GAME_PLAYING:
                 // DRAW GAME PLAYING SCREEN
@@ -61,6 +62,17 @@ export class Game {
     static async drawInitialScreen() {
         const game = Game;
         await game.innitalScreen.Draw()
+
+
+
+
+
+
+
+
+
+
+
     }
 
     static async drawGamePlayingScreen() {
@@ -183,17 +195,13 @@ export class Game {
     static createTreasure() {
         const game = this;
         for (let i = 0; i < game.fruit.length; i++) {
-            game.fruit[i].Draw(game.fruit[i].x, game.fruit[i].y)
+            game.fruit[i].Draw(game.fruit[i].src, game.fruit[i].x, game.fruit[i].y)
         }
     }
     static createMaze() {
         const game = this;
         for (let i = 0; i < game.fences.length; i++) {
             game.fences[i].DrawTile(game.fences[i].src, game.fences[i].x, game.fences[i].y)
-
-
-
-
         }
     }
     static fruitCollision(){

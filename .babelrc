@@ -1,3 +1,11 @@
 {
-  "presets": [ "es2015", "stage-0" ]
+  "presets": [[
+    "@babel/env",
+    {"modules": false}
+  ]],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-runtime",
+    "transform-async-to-generator"
+  ]
 }

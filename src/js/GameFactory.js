@@ -1,4 +1,4 @@
-export class FenceFactory {
+export class GameFactory {
     constructor(canvas) {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
