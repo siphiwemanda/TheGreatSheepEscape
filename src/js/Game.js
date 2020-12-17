@@ -122,7 +122,11 @@ export class Game {
                     if (index !== -1) {
                         game.fruit.splice(index,1)
                         console.log("beep")
+                        game.lives.score += 1
 
+                    }
+                    if(game.sheep.x >= 944 && game.sheep.y >= 672){
+                        game.currentState = GAME_OVER
                     }
                 } else {
                     game.lives.score -= 1
@@ -140,7 +144,11 @@ export class Game {
                     if (index !== -1) {
                         game.fruit.splice(index,1)
                         console.log("beep")
+                        game.lives.score += 1
 
+                    }
+                    if(game.sheep.x >= 944 && game.sheep.y >= 672){
+                        game.currentState = GAME_OVER
                     }
                 } else {
                     game.lives.score -= 1
@@ -161,7 +169,11 @@ export class Game {
                 if (index !== -1) {
                     game.fruit.splice(index,1)
                     console.log("beep")
+                    game.lives.score += 1
 
+                }
+                if(game.sheep.x >= 944 && game.sheep.y >= 672){
+                    game.currentState = GAME_OVER
                 }
 
             } else {
@@ -179,9 +191,12 @@ export class Game {
                 let index = fruitCollision(TemporaryX, game.sheep.y, game.fruit)
                 if (index !== -1) {
                     game.fruit.splice(index,1)
-
+                    game.lives.score += 1
                     console.log("beep")
 
+                }
+                if(game.sheep.x >= 944 && game.sheep.y >= 672){
+                    game.currentState = GAME_OVER
                 }
             } else {
                 game.lives.score -= 1
