@@ -19,7 +19,6 @@ async function startGame(canvas) {
     const createFruit = await addFruit(canvas)
     console.log(createFruit)
     // Game object receives the canvas and the fences
-
     const game = new Game(canvas, createFences, createFruit)
     //starts the game loop
     game.start()

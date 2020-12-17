@@ -39,7 +39,7 @@ export class Game {
         switch (game.currentState) {
             case INITIAL:
                 // DRAW INITIAL SCREEN
-                await game.drawInitialScreen();
+                game.drawInitialScreen();
                 break;
             case GAME_PLAYING:
                 // DRAW GAME PLAYING SCREEN
@@ -56,9 +56,10 @@ export class Game {
 
     }
 
-    static async drawInitialScreen() {
+    static drawInitialScreen() {
         const game = Game;
-        await game.innitalScreen.Draw()
+
+         game.innitalScreen.Draw()
 
 
     }
@@ -69,12 +70,12 @@ export class Game {
         //game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
         const background = new Background(game.canvas)
         await background.Draw()
-        await game.createMaze()
+        await background.DrawHay()
         await game.createFruit()
-
-        await game.drawSheep()
+        await game.createMaze()
 
         game.lives.Draw()
+        await game.drawSheep()
 
     }
 
@@ -119,7 +120,8 @@ export class Game {
                 if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y - 5
                 }
-                if (game.fruitCollision()) {
+                else if (game.fruitCollision()) {
+                    console.log("beep")
 
                 } else {
                     game.lives.score -= 1
@@ -133,8 +135,8 @@ export class Game {
                 if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y + 5
                 }
-                if (game.fruitCollision()) {
-
+                else if (game.fruitCollision()) {
+                    console.log("beep")
                 }else {
                     game.lives.score -= 1
                     if (game.lives.score <= 0) {
@@ -205,6 +207,7 @@ export class Game {
 
             if (game.sheep.x >= game.fruit[i].x && game.sheep.x <= game.fruit[i].x + 32 && game.sheep.y >= game.fruit[i].y && game.sheep.y <= game.fruit[i].y + 32) {
                 console.log('nom')
+                return noFruit = false
                 //game.fruit.splice(game.fruit[i], 1)
             }
         }
@@ -223,17 +226,13 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
                 noCollision = false
                 //console.log(noCollision)
             }
+        if (fence.src.includes('Horizontal') && (sheepY >= fence.y - 64 && sheepY <= fence.y + 64 && sheepX + 50 >= fence.x && sheepX + 50 <= fence.x + 128)) {
+            //console.log(fence.x)
+            noCollision = false
+            //console.log(noCollision)
+        }
         }
     )
-    fences.forEach(fence => {
-            if (fence.src.includes('Horizontal') && (sheepY >= fence.y - 64 && sheepY <= fence.y + 64 && sheepX + 50 >= fence.x && sheepX + 50 <= fence.x + 128)) {
-                //console.log(fence.x)
-                noCollision = false
-                //console.log(noCollision)
-            }
-        }
-    )
-
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
         noCollision = false
         return noCollision

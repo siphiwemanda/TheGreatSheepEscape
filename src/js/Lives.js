@@ -4,17 +4,14 @@ export class Lives {
         this.context = this.canvas.getContext('2d')
 
         this.score = 20
-        this.x = 1100
-        this. y = 20
+        this.x = 1080
+        this. y = 30
 
     }
     Draw(){
 
-        this.context.font = '16px verdana'
-        this.context.fillText('Life: ' + this.score, this.x, this.y)
-    }
-    upDateScore(newScore){
-        this.context.font = '16px verdana'
-        this.context.fillText('Life: ' + newScore, this.x, this.y)
+        this.context.font = '25px verdana'
+        this.context.fillStyle = "red";
+        this.context.fillText('Lives: ' + this.score, this.x, this.y)
     }
 }

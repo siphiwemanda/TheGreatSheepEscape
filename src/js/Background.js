@@ -41,6 +41,23 @@ export class Background {
             resolve()
         })
     }
+
+
+    DrawHay() {
+        return new Promise((resolve) => {
+            const backgroundHeight = 256
+            const backgroundWidth = 256
+
+            const hay = new Image()
+            hay.src = '../img/Attributes/hay.png'
+            hay.onload = () => {
+
+                this.context.drawImage(hay, 944,672)
+            }
+
+            resolve()
+        })
+    }
 }
 
 

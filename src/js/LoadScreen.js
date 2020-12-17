@@ -5,18 +5,12 @@ export class LoadScreen {
         this.width = this.canvas.width
         this.height = this.canvas.height
         this.cellWidth = 136;
-        this.pinkimg = new Image()
-        this.pinkSheepsrc = "../img/sheep/PinkSheepIdle.png"
-
         this.cellHeight = 96;
-
         const gradient = this.context.createLinearGradient(0, 0, 200, 0)
         gradient.addColorStop(0, "#e7e7e7")
         gradient.addColorStop(1, "#b0d6ca")
-
         this.context.fillStyle = gradient
         this.context.fillRect(0, 0, 1200, 800)
-
     }
 
     Draw() {
@@ -26,6 +20,22 @@ export class LoadScreen {
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
         this.context.fillText('press space to start', 510, 250)
+
+        this.context.font = '20px serif'
+        this.context.fillStyle = 'black'
+        this.context.fillText('- just remember if you hit a fence you lose a life', 510, 450)
+
+        this.context.font = '20px serif'
+        this.context.fillStyle = 'black'
+        this.context.fillText('- eat a carrot gain a life ', 510, 500)
+
+        this.context.font = '20px serif'
+        this.context.fillStyle = 'black'
+        this.context.fillText('- eat a pepper just might lose two ', 510, 550)
+
+        this.context.font = '20px serif'
+        this.context.fillStyle = 'black'
+        this.context.fillText('- all you have to do is get me to the hay ', 510, 600)
 
         this.Pink = new Image()
         this.Pink.src = "../img/sheep/PinkSheepIdle.png"
