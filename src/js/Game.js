@@ -23,17 +23,14 @@ export class Game {
         game.gameOverScreen = new EndGame(game.canvas)
         game.sheep = new Sheep(game.canvas)
         game.lives = new Lives(game.canvas)
-
-
-
-
-
     }
 
     start() {
         const game = Game;
         window.requestAnimationFrame(function () {
-            game.runGameLoop();
+            game.runGameLoop().then(r => {
+                console.log('game loop started')
+            });
         });
     }
 
@@ -64,15 +61,6 @@ export class Game {
         await game.innitalScreen.Draw()
 
 
-
-
-
-
-
-
-
-
-
     }
 
     static async drawGamePlayingScreen() {
@@ -82,7 +70,7 @@ export class Game {
         const background = new Background(game.canvas)
         await background.Draw()
         await game.createMaze()
-        await game.createTreasure()
+        await game.createFruit()
 
         await game.drawSheep()
 
@@ -131,13 +119,13 @@ export class Game {
                 if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y - 5
                 }
-                if (game.fruitCollision()){
+                if (game.fruitCollision()) {
 
-                }
-                else {
-                    game.lives.score  -=  1
-                    if (game.lives.score <= 0){
-                        game.currentState = GAME_OVER}
+                } else {
+                    game.lives.score -= 1
+                    if (game.lives.score <= 0) {
+                        game.currentState = GAME_OVER
+                    }
                 }
             }
             if (event.code === "ArrowDown") {
@@ -145,10 +133,13 @@ export class Game {
                 if (CollisionCheck(game.sheep.x, TemporaryY, game.fences, treasure)) {
                     game.sheep.y = game.sheep.y + 5
                 }
-                else {
-                    game.lives.score  -=  1
-                    if (game.lives.score <= 0){
-                        game.currentState = GAME_OVER}
+                if (game.fruitCollision()) {
+
+                }else {
+                    game.lives.score -= 1
+                    if (game.lives.score <= 0) {
+                        game.currentState = GAME_OVER
+                    }
 
                 }
             }
@@ -157,11 +148,11 @@ export class Game {
                 if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
                     game.sheep.x = game.sheep.x + 5
 
-                }
-                else {
-                    game.lives.score  -=  1
-                    if (game.lives.score <= 0){
-                        game.currentState = GAME_OVER}
+                } else {
+                    game.lives.score -= 1
+                    if (game.lives.score <= 0) {
+                        game.currentState = GAME_OVER
+                    }
 
                 }
             }
@@ -169,11 +160,11 @@ export class Game {
                 let TemporaryX = game.sheep.x - 5
                 if (CollisionCheck(TemporaryX, game.sheep.y, game.fences, treasure)) {
                     game.sheep.x = game.sheep.x - 5
-                }
-                else {
-                    game.lives.score  -=  1
-                    if (game.lives.score <= 0){
-                        game.currentState = GAME_OVER}
+                } else {
+                    game.lives.score -= 1
+                    if (game.lives.score <= 0) {
+                        game.currentState = GAME_OVER
+                    }
 
                 }
 
@@ -192,30 +183,29 @@ export class Game {
             game.sheep.DrawTile(game.sheepCounter)
         }
     }
-    static createTreasure() {
+
+    static createFruit() {
         const game = this;
         for (let i = 0; i < game.fruit.length; i++) {
             game.fruit[i].Draw(game.fruit[i].src, game.fruit[i].x, game.fruit[i].y)
         }
     }
+
     static createMaze() {
         const game = this;
         for (let i = 0; i < game.fences.length; i++) {
             game.fences[i].DrawTile(game.fences[i].src, game.fences[i].x, game.fences[i].y)
         }
     }
-    static fruitCollision(){
-        let noFruit = true
 
+    static fruitCollision() {
+        let noFruit = true
         const game = this;
         for (let i = 0; i < game.fruit.length; i++) {
 
             if (game.sheep.x >= game.fruit[i].x && game.sheep.x <= game.fruit[i].x + 32 && game.sheep.y >= game.fruit[i].y && game.sheep.y <= game.fruit[i].y + 32) {
                 console.log('nom')
                 //game.fruit.splice(game.fruit[i], 1)
-
-
-
             }
         }
     }
@@ -243,18 +233,6 @@ export function CollisionCheck(sheepX, sheepY, fences, fruits) {
             }
         }
     )
-    let fruitCounter = 0
-    for (let i = 0; i < fruits.length; i++) {
-
-
-        if (sheepX >= fruits[i].x && sheepX <= fruits[i].x + 32 && sheepY >= fruits[i].y && sheepY <= fruits[i].y + 32) {
-            console.log('nom')
-            fruitCounter = fruitCounter + 1
-            fruits.splice(fruits[i], 1)
-
-            //noCollision = false
-        }
-    }
 
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
         noCollision = false

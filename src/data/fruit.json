@@ -1,22 +1,22 @@
 {
   "Fruit": [
     {
-      "src" : "../img/treasure/Icon25.png",
+      "src" : "../img/treasure/carrot.png",
       "x": 50,
       "y": 50
     },
     {
-      "src" : "../img/treasure/Icon25.png",
+      "src" : "../img/treasure/carrot.png",
       "x": 50,
       "y": 150
     },
     {
-      "src" : "../img/treasure/Icon26.png",
+      "src" : "../img/treasure/pepper.png",
       "x": 50,
       "y": 250
     },
     {
-      "src" : "../img/treasure/Icon26.png",
+      "src" : "../img/treasure/pepper.png",
       "x": 50,
       "y": 350
     }
