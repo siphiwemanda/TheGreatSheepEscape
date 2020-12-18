@@ -62,7 +62,7 @@
     },
     {
       "src" : "../img/Attributes/FenceFrontHorizontal01.png",
-      "x": 610,
+      "x": 810,
       "y": 200
     },
     {
@@ -134,11 +134,6 @@
       "src" : "../img/Attributes/FenceVertical.png",
       "x": 600,
       "y": 316
-    },
-    {
-      "src" : "../img/Attributes/FenceVertical.png",
-      "x": 600,
-      "y": 195
     }
   ]
 }
