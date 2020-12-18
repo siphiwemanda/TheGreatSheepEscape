@@ -27,6 +27,21 @@
     },
     {
       "src" : "../img/Attributes/FenceVertical.png",
+      "x": 400,
+      "y": 0
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 600,
+      "y": 0
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 965,
+      "y": 0
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
       "x": 200,
       "y": 256
     },
@@ -47,18 +62,78 @@
     },
     {
       "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 810,
+      "y": 200
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 725,
+      "y": 200
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 851,
+      "y": 80
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 972,
+      "y": 80
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
+      "x": 1093,
+      "y": 80
+    },
+    {
+      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
       "x": 600,
-      "y": 200
+      "y": 80
     },
     {
-      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
-      "x": 700,
-      "y": 200
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 400,
+      "y": 128
     },
     {
-      "src" : "../img/Attributes/FenceFrontHorizontal01.png",
-      "x": 850,
-      "y": 200
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 400,
+      "y": 256
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 400,
+      "y": 384
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 400,
+      "y": 512
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 400,
+      "y": 768
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 600,
+      "y": 679
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 600,
+      "y": 558
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 600,
+      "y": 437
+    },
+    {
+      "src" : "../img/Attributes/FenceVertical.png",
+      "x": 600,
+      "y": 316
     }
   ]
 }

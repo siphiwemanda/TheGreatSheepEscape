@@ -2,190 +2,280 @@ import {Sheep} from './Sheep.js'
 import {Background} from './Background.js'
 import {LoadScreen} from './LoadScreen.js'
 import {EndGame} from './EndGame.js'
-import {FenceFactory} from './FenceFactory.js'
-import {GameScore} from './GameScore.js'
+import {Lives} from './Lives.js'
 
-export async function Game(canvas, state) {
-    const game = Game;
-    console.log(canvas)
+const INITIAL = 1;
+const GAME_PLAYING = 2;
+const GAME_OVER = 3;
 
-    game.canvas = canvas;
-    game.context = game.canvas.getContext('2d')
-
-    game.state = state
-
-    if (game.state === 1) {
-        return await LoadGame(canvas, state)
+export class Game {
+    constructor(canvas, fences, fruit) {
+        const game = Game;
+        game.canvas = canvas;
+        game.context = game.canvas.getContext('2d')
+        game.currentState = INITIAL
+        game.addEventListener()
+        game.fences = fences
+        game.fruit = fruit
+        game.startTime = new Date()
+        game.sheepCounter = 0
+        game.innitalScreen = new LoadScreen(game.canvas)
+        game.gameOverScreen = new EndGame(game.canvas)
+        game.sheep = new Sheep(game.canvas)
+        game.lives = new Lives(game.canvas)
     }
-    if (game.state === 2) {
-        await StartGame(canvas, game.context)
+    // ONCE THIS IS CALLED THE GAME IS STARTED
+    start() {
+        const game = Game;
+        window.requestAnimationFrame(function () {
+            game.runGameLoop().then(r => {
+                console.log('game loop started')
+            });
+        });
     }
-    if (game.state === 3) {
-        //EndGame()
+   // THE GAME LOOP CONTROLS THE STATE THE GAME IS IN
+    static async runGameLoop() {
+        const game = Game;
+        switch (game.currentState) {
+            case INITIAL:
+                // DRAW INITIAL SCREEN
+                await game.drawInitialScreen();
+                break;
+            case GAME_PLAYING:
+                // DRAW GAME PLAYING SCREEN
+                await game.drawGamePlayingScreen();
+                break;
+            case GAME_OVER:
+                // DRAW GAME OVER SCREEN
+                await game.drawGameOverScreen();
+                break;
+        }
+        // CONTROLS THE ANIMATION BY RERUNNING THE GAME LOOP
+        window.requestAnimationFrame(function () {
+            game.runGameLoop();
+        });
+
+    }
+    // CREATES THE START SCREEN
+    static async drawInitialScreen() {
+        const game = Game;
+        //game.context.clearRect(500, 400, 400, 250);
+        await game.innitalScreen.Draw()
+
+
+    }
+    // CREATES THE GAME PLAYING SCREEN
+    static async drawGamePlayingScreen() {
+        const game = Game;
+        const background = new Background(game.canvas)
+        await background.Draw()
+        await background.DrawHay()
+        await game.createFruit()
+        await game.createMaze()
+        game.lives.Draw()
+        await game.drawSheep()
+    }
+    // CREATES THE END SCREEN
+    static async drawGameOverScreen() {
+        const game = Game;
+        await game.gameOverScreen.Draw(game.lives.score)
     }
 
-}
+    // LISTENS FOR USER CONTROLS
+    static addEventListener() {
+        const game = this;
 
-// controls the loop the game is currently in
-function GameLoop(CurrentState) {
-    switch (CurrentState) {
-        case 1:
-            //draw opening screen
-            break;
-        case 2:
-            //draw playing screen
-            break;
-        case 3:
-            //draw ending screen]
-            break;
+        window.addEventListener('keydown', function (event) {
+            switch (game.currentState) {
+                case INITIAL:
+                    if (event.code === "Space") {
+                        game.currentState = GAME_PLAYING;
+                    }
+                    break;
+                case GAME_PLAYING:
+                    break;
+            }
+        });
 
+
+        window.addEventListener('keydown', function (event) {
+            switch (game.currentState) {
+                case GAME_OVER:
+                    if (event.code === "Space") {
+                        console.log(event.code);
+                        game.reset()
+                        game.currentState = GAME_PLAYING;
+                    }
+                    break;
+            }
+        });
+
+
+        window.addEventListener("keydown", function (event) {
+                if (event.code === "ArrowUp") {
+                    let TemporaryY = game.sheep.y - 5
+                    if (SheepCollision(game.sheep.x, TemporaryY, game.fences)) {
+                        game.sheep.y = game.sheep.y - 5
+                        let index = fruitCollision(game.sheep.x, TemporaryY, game.fruit)
+                        if (index !== -1) {
+                            game.fruit.splice(index, 1)
+                            console.log("beep")
+                            game.lives.score += 1
+
+                        }
+                        if (game.sheep.x >= 944 && game.sheep.y >= 672) {
+                            game.currentState = GAME_OVER
+                        }
+                    } else {
+                        game.lives.score -= 1
+                        if (game.lives.score <= 0) {
+                            game.currentState = GAME_OVER
+                        }
+                    }
+
+                }
+                if (event.code === "ArrowDown") {
+                    let TemporaryY = game.sheep.y + 5
+                    if (SheepCollision(game.sheep.x, TemporaryY, game.fences)) {
+                        game.sheep.y = game.sheep.y + 5
+                        let index = fruitCollision(game.sheep.x, TemporaryY, game.fruit)
+                        if (index !== -1) {
+                            game.fruit.splice(index, 1)
+                            console.log("beep")
+                            game.lives.score += 1
+
+                        }
+                        if (game.sheep.x >= 944 && game.sheep.y >= 672) {
+                            game.currentState = GAME_OVER
+                        }
+                    } else {
+                        game.lives.score -= 1
+                        if (game.lives.score <= 0) {
+                            game.currentState = GAME_OVER
+                        }
+                    }
+                }
+
+                if (event.code === "ArrowRight") {
+                    let TemporaryX = game.sheep.x + 5
+                    if (SheepCollision(TemporaryX, game.sheep.y, game.fences)) {
+                        game.sheep.x = game.sheep.x + 5
+                        let index = fruitCollision(TemporaryX, game.sheep.y, game.fruit)
+                        if (index !== -1) {
+                            game.fruit.splice(index, 1)
+                            console.log("beep")
+                            game.lives.score += 1
+
+                        }
+                        if (game.sheep.x >= 944 && game.sheep.y >= 672) {
+                            game.currentState = GAME_OVER
+                        }
+
+                    } else {
+                        game.lives.score -= 1
+                        if (game.lives.score <= 0) {
+                            game.currentState = GAME_OVER
+                        }
+
+                    }
+                }
+                if (event.code === "ArrowLeft") {
+                    let TemporaryX = game.sheep.x - 5
+                    if (SheepCollision(TemporaryX, game.sheep.y, game.fences)) {
+                        game.sheep.x = game.sheep.x - 5
+                        let index = fruitCollision(TemporaryX, game.sheep.y, game.fruit)
+                        if (index !== -1) {
+                            game.fruit.splice(index, 1)
+                            game.lives.score += 1
+                            console.log("beep")
+
+                        }
+                        if (game.sheep.x >= 944 && game.sheep.y >= 672) {
+                            game.currentState = GAME_OVER
+                        }
+                    } else {
+                        game.lives.score -= 1
+                        if (game.lives.score <= 0) {
+                            game.currentState = GAME_OVER
+                        }
+
+                    }
+                }
+            }
+        )
     }
-}
-
-async function LoadGame(canvas, state) {
-    const start = new LoadScreen(canvas)
-    console.log(start)
-    console.log(state)
-    await start.Draw()
-    await start.Drawblack()
-    await start.Drawwhite()
-    await start.Drawyellow()
-    const score = new GameScore(canvas)
-    score.Draw()
-    window.addEventListener('click', function (event) {
-        console.log('click')
-        console.log(event)
-        state = 2
-        console.log(state)
-        Game(canvas, state)
-
-    })
-}
-
-async function StartGame(canvas, context) {
-    const background = new Background(canvas)
-    const sheep = new Sheep(canvas)
-    const fences = await getFences(canvas)
-    console.log(fences)
-    await GameEngine(canvas, context, fences, background, sheep)
-}
-
-function endGame() {
-
-}
-
-
-export async function getFences(canvas) {
-    let fenceObject;
-
-    await fetch("../data/fences.json").then(function (response) {
-        return response.json()
-    }).then(function (JSONObject) {
-        //console.log(JSONObject)
-        fenceObject = JSONObject
-    }).catch(function (error) {
-        console.log('Data failed to load')
-        console.log(error)
-    })
-
-    const Fences = []
-    for (let i = 0; i < fenceObject.Fences.length; i++) {
-        let fence = new FenceFactory(canvas)
-        fence.x = fenceObject.Fences[i].x
-        fence.y = fenceObject.Fences[i].y
-        fence.src = fenceObject.Fences[i].src
-        Fences.push(fence)
-    }
-    //console.log(Fences)
-    return Fences
-
-
-}
-
-async function createMaze(canvas, fences) {
-    for (let i = 0; i < fences.length; i++) {
-        fences[i].DrawTile(fences[i].src, fences[i].x, fences[i].y)
-    }
-}
-
-async function GameEngine(canvas, context, fences, background, sheep) {
-    window.requestAnimationFrame(animationLoop)
-
-    let counter = 0;
-    let start = new Date()
-
-    function animationLoop() {
-
+    //DRAWS THE SHEEP AND CONTROLS HIS ANIMATION
+    static async drawSheep() {
+        const game = this;
         let now = new Date()
-        if (now - start >= 100) {
-            start = now
-            context.clearRect(0, 0, canvas.width, canvas.height)
 
-            counter++
-            counter %= 6
-
-            background.DrawTile()
-            createMaze(canvas, fences)
-            sheep.DrawTile(counter)
+        if ((now.getMilliseconds() - game.startTime.getMilliseconds()) % 1 === 0) {
+            game.sheepCounter++
+            game.sheepCounter %= 6
+            game.sheep.DrawTile(game.sheepCounter)
         }
-        window.requestAnimationFrame(animationLoop)
-
     }
-
-    window.addEventListener("keydown", function (event) {
-        if (event.code === "ArrowUp") {
-            console.log(event.code)
-            let TemporaryY = sheep.y-5
-            if (CollisionCheck(sheep.x, TemporaryY)){
-                sheep.y = sheep.y -5
-            }
+    // USING THE PASSED IN ARRAY DRAWS THE FRUIT
+    static createFruit() {
+        const game = this;
+        for (let i = 0; i < game.fruit.length; i++) {
+            game.fruit[i].Draw(game.fruit[i].src, game.fruit[i].x, game.fruit[i].y)
         }
-        if (event.code === "ArrowDown") {
-            console.log(event.code)
-
-            let TemporaryY = sheep.y+5
-            if (CollisionCheck(sheep.x, TemporaryY)){
-                sheep.y = sheep.y + 5
-            }
-
+    }
+    // USING THE PASSED IN ARRAY DRAWS THE FENCES
+    static createMaze() {
+        const game = this;
+        for (let i = 0; i < game.fences.length; i++) {
+            game.fences[i].DrawTile(game.fences[i].src, game.fences[i].x, game.fences[i].y)
         }
-        if (event.code === "ArrowRight") {
-            console.log(event.code)
-            let TemporaryX = sheep.x+5
-            if (CollisionCheck(TemporaryX, sheep.y)){
-                sheep.x = sheep.x + 5
-            }
-        }
-        if (event.code === "ArrowLeft") {
-            console.log(event.code)
-            let TemporaryX = sheep.x-5
-            if (CollisionCheck(TemporaryX, sheep.y)){
-                sheep.x = sheep.x - 5
-            }
-
-        }
-    })
-
+    }
+    // ALLOWS FOR THE RESETTING OF THE GAME
+    static reset(){
+        const game = this;
+        game.lives.score = 20
+        game.sheep.x = 10
+        game.sheep.y =10
+    }
 }
-
-function CollisionCheck(sheepX, sheepY) {
+ // TO SEE WHETHER THERE WAS A COLLISION BETWEEN A FENCE AND A SHEEP OR THE EDGE OF THE PLAYING AREA
+export function SheepCollision(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
     const topEdge = 0
     const bottomEdge = 800 - 45
-
+    fences.forEach(fence => {
+            if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128)) {
+                noCollision = false
+            }
+            if (fence.src.includes('Horizontal') && (sheepY >= fence.y - 64 && sheepY <= fence.y + 64 && sheepX + 50 >= fence.x && sheepX + 50 <= fence.x + 128)) {
+                noCollision = false
+            }
+        }
+    )
     if (sheepX <= leftEdge || sheepX >= rightEdge) {
         noCollision = false
         return noCollision
     }
-    if (sheepY <= topEdge || sheepY >= bottomEdge){
+    if (sheepY <= topEdge || sheepY >= bottomEdge) {
         noCollision = false
         return noCollision
-    }
-    else {
+    } else {
         return noCollision
     }
 
+
 }
+//CHECK IF THERE WAS A COLLISION BETWEEN SHEEP AND FRUIT
+export function fruitCollision(sheepX, sheepY, fruit) {
+    let noFruit = -1
+    for (let i = 0; i < fruit.length; i++) {
+        if (sheepX >= fruit[i].x - 32 && sheepX <= fruit[i].x + 32 && sheepY >= fruit[i].y - 32 && sheepY <= fruit[i].y + 32) {
+            noFruit = i
+        }
+    }
+    return noFruit
+}
+
+
 

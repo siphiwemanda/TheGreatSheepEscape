@@ -1,0 +1,24 @@
+{
+  "Fruit": [
+    {
+      "src" : "../img/treasure/carrot.png",
+      "x": 50,
+      "y": 50
+    },
+    {
+      "src" : "../img/treasure/carrot.png",
+      "x": 50,
+      "y": 150
+    },
+    {
+      "src" : "../img/treasure/pepper.png",
+      "x": 50,
+      "y": 250
+    },
+    {
+      "src" : "../img/treasure/pepper.png",
+      "x": 50,
+      "y": 350
+    }
+  ]
+}

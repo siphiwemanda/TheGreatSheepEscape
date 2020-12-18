@@ -1,4 +1,5 @@
-export class FenceFactory {
+// THE CLASS CREATES GAME OBJECTS
+export class GameFactory {
     constructor(canvas) {
         this.canvas = canvas
         this.context = this.canvas.getContext('2d')
@@ -25,4 +26,5 @@ export class FenceFactory {
 
         this.context.drawImage(this.img, this.x, this.y)
     }
+
 }
