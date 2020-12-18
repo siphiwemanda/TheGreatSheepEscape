@@ -17,10 +17,10 @@ let fruit = [{
 }]
 describe('#Collisions()', function () {
 
-    it('should check that they where no sheep/fence collision', function () {
+    it('should check that a sheep and a fence did not collide', function () {
         expect(CollisionFencevsSheep(500,400,fence)).to.be.true
     });
-    it('should check that they was a sheep/fence collision', function () {
+    it('should check that a sheep and a fence collided', function () {
         expect(CollisionFencevsSheep(100,200,fence)).to.be.false
     });
     it('should check that the sheep was in the bounds of the game', function () {
@@ -29,10 +29,10 @@ describe('#Collisions()', function () {
     it('should check the sheep was outside the bounds of the game', function () {
         expect(CollisionFencevsSheep(1300,0,fence)).to.be.false
     });
-    it('should check that they was a fruit collision and return 0', function () {
+    it('should check that a sheep collided with a fruit and return 0', function () {
         assert.isNumber(fruitCollision(200,200,fruit), "0")
     });
-    it('should check that they was not a fruit collision and return -1', function () {
+    it('should check that a sheep did not collide with a fruit and return  -1', function () {
         assert.isNumber(fruitCollision(600,600,fruit), "-1")
     });
 })

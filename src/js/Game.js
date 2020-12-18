@@ -266,7 +266,7 @@ export function CollisionFencevsSheep(sheepX, sheepY, fences) {
 
 
 }
-//CHECK IF THERE WAS A COLLISION BETWEEN A
+//CHECK IF THERE WAS A COLLISION BETWEEN SHEEP AND FRUIT
 export function fruitCollision(sheepX, sheepY, fruit) {
     let noFruit = -1
     for (let i = 0; i < fruit.length; i++) {
