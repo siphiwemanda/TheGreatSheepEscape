@@ -114,7 +114,7 @@ export class Game {
         window.addEventListener("keydown", function (event) {
                 if (event.code === "ArrowUp") {
                     let TemporaryY = game.sheep.y - 5
-                    if (CollisionFencevsSheep(game.sheep.x, TemporaryY, game.fences)) {
+                    if (SheepCollision(game.sheep.x, TemporaryY, game.fences)) {
                         game.sheep.y = game.sheep.y - 5
                         let index = fruitCollision(game.sheep.x, TemporaryY, game.fruit)
                         if (index !== -1) {
@@ -136,7 +136,7 @@ export class Game {
                 }
                 if (event.code === "ArrowDown") {
                     let TemporaryY = game.sheep.y + 5
-                    if (CollisionFencevsSheep(game.sheep.x, TemporaryY, game.fences)) {
+                    if (SheepCollision(game.sheep.x, TemporaryY, game.fences)) {
                         game.sheep.y = game.sheep.y + 5
                         let index = fruitCollision(game.sheep.x, TemporaryY, game.fruit)
                         if (index !== -1) {
@@ -158,7 +158,7 @@ export class Game {
 
                 if (event.code === "ArrowRight") {
                     let TemporaryX = game.sheep.x + 5
-                    if (CollisionFencevsSheep(TemporaryX, game.sheep.y, game.fences)) {
+                    if (SheepCollision(TemporaryX, game.sheep.y, game.fences)) {
                         game.sheep.x = game.sheep.x + 5
                         let index = fruitCollision(TemporaryX, game.sheep.y, game.fruit)
                         if (index !== -1) {
@@ -181,7 +181,7 @@ export class Game {
                 }
                 if (event.code === "ArrowLeft") {
                     let TemporaryX = game.sheep.x - 5
-                    if (CollisionFencevsSheep(TemporaryX, game.sheep.y, game.fences)) {
+                    if (SheepCollision(TemporaryX, game.sheep.y, game.fences)) {
                         game.sheep.x = game.sheep.x - 5
                         let index = fruitCollision(TemporaryX, game.sheep.y, game.fruit)
                         if (index !== -1) {
@@ -238,7 +238,7 @@ export class Game {
     }
 }
  // TO SEE WHETHER THERE WAS A COLLISION BETWEEN A FENCE AND A SHEEP OR THE EDGE OF THE PLAYING AREA
-export function CollisionFencevsSheep(sheepX, sheepY, fences) {
+export function SheepCollision(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
     const leftEdge = 0;
