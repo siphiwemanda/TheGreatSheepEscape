@@ -1,3 +1,4 @@
+//THIS CLASS DRAWS THE BACKGROUND
 export class Background {
     constructor(canvas) {
         this.canvas = canvas

@@ -1,3 +1,4 @@
+//THIS CLASS DRAWS THE END SCREEN
 import {LoadScreen} from "./LoadScreen.js";
 export class EndGame extends LoadScreen{
     constructor(canvas) {

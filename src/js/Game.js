@@ -24,7 +24,7 @@ export class Game {
         game.sheep = new Sheep(game.canvas)
         game.lives = new Lives(game.canvas)
     }
-
+    // ONCE THIS IS CALLED THE GAME IS STARTED
     start() {
         const game = Game;
         window.requestAnimationFrame(function () {
@@ -33,13 +33,13 @@ export class Game {
             });
         });
     }
-
+   // THE GAME LOOP CONTROLS THE STATE THE GAME IS IN
     static async runGameLoop() {
         const game = Game;
         switch (game.currentState) {
             case INITIAL:
                 // DRAW INITIAL SCREEN
-                game.drawInitialScreen();
+                await game.drawInitialScreen();
                 break;
             case GAME_PLAYING:
                 // DRAW GAME PLAYING SCREEN
@@ -50,12 +50,13 @@ export class Game {
                 await game.drawGameOverScreen();
                 break;
         }
+        // CONTROLS THE ANIMATION BY RERUNNING THE GAME LOOP
         window.requestAnimationFrame(function () {
             game.runGameLoop();
         });
 
     }
-
+    // CREATES THE START SCREEN
     static async drawInitialScreen() {
         const game = Game;
         //game.context.clearRect(500, 400, 400, 250);
@@ -63,31 +64,27 @@ export class Game {
 
 
     }
-
+    // CREATES THE GAME PLAYING SCREEN
     static async drawGamePlayingScreen() {
         const game = Game;
-
-        //game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
         const background = new Background(game.canvas)
         await background.Draw()
         await background.DrawHay()
         await game.createFruit()
         await game.createMaze()
-
         game.lives.Draw()
         await game.drawSheep()
-
     }
-
+    // CREATES THE END SCREEN
     static async drawGameOverScreen() {
         const game = Game;
         await game.gameOverScreen.Draw(game.lives.score)
     }
 
-
+    // LISTENS FOR USER CONTROLS
     static addEventListener() {
-
         const game = this;
+
         window.addEventListener('keydown', function (event) {
             switch (game.currentState) {
                 case INITIAL:
@@ -100,7 +97,7 @@ export class Game {
             }
         });
 
-        // Key Listener
+
         window.addEventListener('keydown', function (event) {
             switch (game.currentState) {
                 case GAME_OVER:
@@ -156,9 +153,6 @@ export class Game {
                         if (game.lives.score <= 0) {
                             game.currentState = GAME_OVER
                         }
-                        // if (game.lives >= 0 && (game.sheep.x === 944 || game.sheep.y === 672)) {
-                        //     game.currentState = GAME_OVER
-                        // }
                     }
                 }
 
@@ -206,15 +200,11 @@ export class Game {
                         }
 
                     }
-
-
                 }
-
-
             }
         )
     }
-
+    //DRAWS THE SHEEP AND CONTROLS HIS ANIMATION
     static async drawSheep() {
         const game = this;
         let now = new Date()
@@ -225,20 +215,21 @@ export class Game {
             game.sheep.DrawTile(game.sheepCounter)
         }
     }
-
+    // USING THE PASSED IN ARRAY DRAWS THE FRUIT
     static createFruit() {
         const game = this;
         for (let i = 0; i < game.fruit.length; i++) {
             game.fruit[i].Draw(game.fruit[i].src, game.fruit[i].x, game.fruit[i].y)
         }
     }
-
+    // USING THE PASSED IN ARRAY DRAWS THE FENCES
     static createMaze() {
         const game = this;
         for (let i = 0; i < game.fences.length; i++) {
             game.fences[i].DrawTile(game.fences[i].src, game.fences[i].x, game.fences[i].y)
         }
     }
+    // ALLOWS FOR THE RESETTING OF THE GAME
     static reset(){
         const game = this;
         game.lives.score = 20
@@ -246,7 +237,7 @@ export class Game {
         game.sheep.y =10
     }
 }
-
+ // TO SEE WHETHER THERE WAS A COLLISION BETWEEN A FENCE AND A SHEEP OR THE EDGE OF THE PLAYING AREA
 export function CollisionFencevsSheep(sheepX, sheepY, fences) {
     let noCollision = true
     const rightEdge = 1200 - 45;
@@ -255,14 +246,10 @@ export function CollisionFencevsSheep(sheepX, sheepY, fences) {
     const bottomEdge = 800 - 45
     fences.forEach(fence => {
             if (fence.src.includes('Vertical') && (sheepX >= fence.x - 32 && sheepX <= fence.x + 32 && sheepY >= fence.y && sheepY <= fence.y + 128)) {
-                //console.log(fence.x)
                 noCollision = false
-                //console.log(noCollision)
             }
             if (fence.src.includes('Horizontal') && (sheepY >= fence.y - 64 && sheepY <= fence.y + 64 && sheepX + 50 >= fence.x && sheepX + 50 <= fence.x + 128)) {
-                //console.log(fence.x)
                 noCollision = false
-                //console.log(noCollision)
             }
         }
     )
@@ -279,25 +266,15 @@ export function CollisionFencevsSheep(sheepX, sheepY, fences) {
 
 
 }
-
+//CHECK IF THERE WAS A COLLISION BETWEEN A
 export function fruitCollision(sheepX, sheepY, fruit) {
     let noFruit = -1
-    console.log('fruit test')
-
     for (let i = 0; i < fruit.length; i++) {
         if (sheepX >= fruit[i].x - 32 && sheepX <= fruit[i].x + 32 && sheepY >= fruit[i].y - 32 && sheepY <= fruit[i].y + 32) {
-            console.log('nom')
             noFruit = i
-            console.log(noFruit)
-
-            //game.fruit.splice(game.fruit[i], 1)
         }
     }
-
-
     return noFruit
-
-
 }
 
 

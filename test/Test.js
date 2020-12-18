@@ -4,8 +4,6 @@ const expect = chai.expect;
 const assert = chai.assert;
 
 import {CollisionFencevsSheep, fruitCollision} from '../src/js/Game.js'
-import {generateRandomNumber, generateRandomNumberMaxThree} from "../src/js/utils.js";
-import {addFruit} from "../src/js/ObjectData.js";
 
 let fence =[{
     src: "../img/Attributes/FenceVertical.png",
@@ -19,7 +17,7 @@ let fruit = [{
 }]
 
 
-describe('#Game()', function () {
+describe('#Collisions()', function () {
 
     it('should check that they where no sheep/fence collision', function () {
         expect(CollisionFencevsSheep(500,400,fence)).to.be.true

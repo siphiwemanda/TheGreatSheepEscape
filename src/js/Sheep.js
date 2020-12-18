@@ -1,3 +1,4 @@
+//THIS CLASS DRAWS THE SHEEP
 export class Sheep {
     constructor(canvas) {
         this.canvas = canvas

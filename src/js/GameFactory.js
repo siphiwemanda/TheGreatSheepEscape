@@ -1,3 +1,4 @@
+// THE CLASS CREATES GAME OBJECTS
 export class GameFactory {
     constructor(canvas) {
         this.canvas = canvas

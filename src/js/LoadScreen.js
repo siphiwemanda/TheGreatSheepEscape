@@ -1,3 +1,4 @@
+//THIS CLASS DRAWS THE START SCREEN
 export class LoadScreen {
     constructor(canvas) {
         this.canvas = canvas

@@ -1,3 +1,4 @@
+//THIS CLASS CONTROLS LIVES
 export class Lives {
     constructor(canvas) {
         this.canvas = canvas
