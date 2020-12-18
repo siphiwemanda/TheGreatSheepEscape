@@ -23,19 +23,15 @@ export class LoadScreen {
 
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
-        this.context.fillText('- just remember if you hit a fence you lose a life', 510, 450)
+        this.context.fillText('just remember if you hit a fence you lose a life', 450, 450)
 
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
-        this.context.fillText('- eat a carrot gain a life ', 510, 500)
+        this.context.fillText('eat a carrot or a pepper gain a life ', 480, 500)
 
         this.context.font = '20px serif'
         this.context.fillStyle = 'black'
-        this.context.fillText('- eat a pepper just might lose two ', 510, 550)
-
-        this.context.font = '20px serif'
-        this.context.fillStyle = 'black'
-        this.context.fillText('- all you have to do is get me to the hay ', 510, 600)
+        this.context.fillText('all you have to do is get me to the hay ', 470, 550)
 
         this.Pink = new Image()
         this.Pink.src = "../img/sheep/PinkSheepIdle.png"

@@ -33,11 +33,11 @@ describe('#Game()', function () {
     it('should check that they was a sheep/treasure collision', function () {
         expect(CollisionFencevsSheep(600,600,fence)).to.be.true
     });
-    it('should check that they was a fruit collision', function () {
+    it('should check that they was a fruit collision and return 0', function () {
         // expect(fruitCollision(201,201,fruit)).to.be.false
         assert.isNumber(fruitCollision(200,200,fruit), "0")
     });
-    it('should check that they was a fruit collision dgdfgdfg', function () {
+    it('should check that they was not a fruit collision and return -1', function () {
         // assert(fruitCollision(600,600,fruit)).isNumber(-1)
         assert.isNumber(fruitCollision(600,600,fruit), "-1")
     });
