@@ -34,7 +34,7 @@ the app should be listening at
 ```
 http://localhost:3001/
 ```
-test can be run by navigating to the root directory and runnning 
+test can be run by navigating to the root directory and running 
 
 ```
 npm test
@@ -43,8 +43,6 @@ npm test
 
 The game is hosted on heroku at : https://oldeworle-mazegame.herokuapp.com/
 
-### pipeline 
-https://dashboard.heroku.com/pipelines/8bd96e7f-5b64-46b4-8aee-c22b9c00d716
 
 ### Game Play 
 A sheep is attempting to escape a farm. The sheep will have to get from the start of the maze. The top left corner and find his way to a hay bundle which will transport the sheep and player to the next level 
