@@ -22,7 +22,7 @@ node -v
 then run 
 
 ```
-npm init
+npm install
 ```
 Start the server by running 
 ```
