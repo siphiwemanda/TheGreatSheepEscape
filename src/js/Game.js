@@ -284,6 +284,3 @@ export function fruitCollision(sheepX, sheepY, fruits) {
     }
     return noFruit
 }
-
-
-
