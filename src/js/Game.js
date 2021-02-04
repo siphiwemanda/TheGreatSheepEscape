@@ -264,16 +264,6 @@ export function SheepCollision(sheepX, sheepY, fences) {
         return noCollision
     }
 }
-//CHECK IF THERE WAS A COLLISION BETWEEN SHEEP AND FRUIT
-/*export function fruitCollision(sheepX, sheepY, fruit) {
-    let noFruit = -1
-    for (let i = 0; i < fruit.length; i++) {
-        if (sheepX >= fruit[i].x - 32 && sheepX <= fruit[i].x + 32 && sheepY >= fruit[i].y - 32 && sheepY <= fruit[i].y + 32) {
-            noFruit = i
-        }
-    }
-    return noFruit
-}*/
 
 export function fruitCollision(sheepX, sheepY, fruits) {
     let noFruit = -1
