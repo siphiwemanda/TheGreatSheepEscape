@@ -39,11 +39,11 @@ export async function addFruit(canvas) {
     // THIS ITERATES THROUGH THE ARRAY AND CREATES INSTANCES OF THE GAME FACTORY TO BE USED IN THE GAME CLASS
     const Fruit = []
     for (let i = 0; i < fruitObject.Fruit.length; i++) {
-        let fence = new GameFactory(canvas)
-        fence.x = fruitObject.Fruit[i].x
-        fence.y = fruitObject.Fruit[i].y
-        fence.src = fruitObject.Fruit[i].src
-        Fruit.push(fence)
+        let fruit = new GameFactory(canvas)
+        fruit.x = fruitObject.Fruit[i].x
+        fruit.y = fruitObject.Fruit[i].y
+        fruit.src = fruitObject.Fruit[i].src
+        Fruit.push(fruit)
     }
     return Fruit
 }

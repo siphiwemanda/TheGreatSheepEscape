@@ -18,6 +18,7 @@
     "core.js": "^0.4.2",
     "express": "^4.17.1",
     "mocha": "^8.2.1",
+    "phaser": "^3.50.1",
     "regenerator-runtime": "^0.13.7"
   },
   "engines": {

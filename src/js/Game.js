@@ -263,11 +263,9 @@ export function SheepCollision(sheepX, sheepY, fences) {
     } else {
         return noCollision
     }
-
-
 }
 //CHECK IF THERE WAS A COLLISION BETWEEN SHEEP AND FRUIT
-export function fruitCollision(sheepX, sheepY, fruit) {
+/*export function fruitCollision(sheepX, sheepY, fruit) {
     let noFruit = -1
     for (let i = 0; i < fruit.length; i++) {
         if (sheepX >= fruit[i].x - 32 && sheepX <= fruit[i].x + 32 && sheepY >= fruit[i].y - 32 && sheepY <= fruit[i].y + 32) {
@@ -275,7 +273,14 @@ export function fruitCollision(sheepX, sheepY, fruit) {
         }
     }
     return noFruit
+}*/
+
+export function fruitCollision(sheepX, sheepY, fruits) {
+    let noFruit = -1
+    for (const {fruit, index} of fruits.map((f, i) => ({  fruit: f, index: i }))) {
+        if (sheepX >= fruit.x - 32 && sheepX <= fruit.x + 32 && sheepY >= fruit.y - 32 && sheepY <= fruit.y + 32) {
+            noFruit = index
+        }
+    }
+    return noFruit
 }
-
-
-
