@@ -60,9 +60,11 @@ export class Game {
     static async drawInitialScreen() {
         const game = Game;
         //game.context.clearRect(500, 400, 400, 250);
-        await game.innitalScreen.Draw()
-
-
+        game.innitalScreen.Text()
+        await game.innitalScreen.Draw("../img/sheep/PinkSheepIdle.png", 350,300)
+        await game.innitalScreen.Draw("../img/sheep/yellowSheepIdle.png", 500,300)
+        await game.innitalScreen.Draw("../img/sheep/blackSheepIdle.png", 650,300)
+        await game.innitalScreen.Draw("../img/sheep/whiteSheepIdle.png", 800,300)
     }
     // CREATES THE GAME PLAYING SCREEN
     static async drawGamePlayingScreen() {
